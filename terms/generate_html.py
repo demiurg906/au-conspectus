@@ -5,6 +5,7 @@ import regex
 import requests
 import sys
 
+from jinja2 import Template
 from lxml.cssselect import CSSSelector
 from textile import textile
 
@@ -181,7 +182,7 @@ def get_neerc_info(term: str):
             return None
         tree = lxml.html.fromstring(resp.content)
         thumbnails = CSSSelector('img.thumbimage')(tree)
-        if thumbnails is None:
+        if thumbnails is None or not thumbnails:
             return None
         thumbnail = thumbnails[0]
         args = thumbnail.attrib
@@ -221,11 +222,11 @@ def get_info(term: str):
 def get_terms(filename):
     with open(filename) as f:
         return json.load(f)
-    # res = set()
-    # for file in os.listdir(input_folder):
-    #     if file.endswith('.json'):
-    #         res.update(json.load(open(file)))
-    # return res
+        # res = set()
+        # for file in os.listdir(input_folder):
+        #     if file.endswith('.json'):
+        #         res.update(json.load(open(file)))
+        # return res
 
 
 # def generate_terms_info(input_folder='./'):
@@ -246,23 +247,79 @@ def generate_terms_info(filename):
     return json.dumps(data)
 
 
-def generate_htmls(input_folder='./input', output_folder='./output', template_name='template.html'):
-    files = [file for file in os.listdir(input_folder) if file.endswith('.html')]
-    with open(template_name) as f:
-        template = ''.join(f.readlines())
+def get_toc_from_file(filename):
+    with open(filename) as f:
+        return json.load(f)
+
+
+def generate_toc(toc_list):
+    it = iter(toc_list)
+    toc = []
+    current_h1 = {'h2': []}
+    current_h2 = {}
+    try:
+        while True:
+            file, el = next(it)
+            tag = int(el['tag'])
+            title = el['title']
+            anchor = '{}#{}'.format(file, el['anchor'])
+            try:
+                if tag == 1:
+                    current_h1['h2'].append(current_h2)
+                    current_h2 = {}
+                    toc.append(current_h1)
+                    current_h1 = {'title': title, 'anchor': anchor, 'h2': []}
+                elif tag == 2:
+                    current_h1['h2'].append(current_h2)
+                    current_h2 = {'title': title, 'anchor': anchor, 'h3': []}
+                elif tag == 3:
+                    current_h2['h3'].append({'title': title, 'anchor': anchor})
+            except KeyError:
+                pass
+    except StopIteration:
+        current_h1['h2'].append(current_h2)
+        toc.append(current_h1)
+    toc = toc[1:]
+    for h1 in toc:
+        if not h1['h2'][0]:
+            del h1['h2'][0]
+    return toc
+
+
+def generate_htmls(input_folder='./terms/input', output_folder='./terms/output', template_name='template.html'):
+    files = [file for file in sorted(os.listdir(input_folder)) if file.endswith('.html')]
     content_template = '{}\n<script>\nvar terms = {};\n</script>'
+    envs = []
+    toc_list = []
     for file in files:
         filename = '{}/{}'.format(input_folder, file)
         with open(filename) as f:
             content = ''.join(f.readlines())
+        res_filename = file.replace(".html", ".valid.html")
+        res_file = '{}/{}'.format(output_folder, res_filename)
 
-        terms_file = filename.replace('.html', '.json')
+        headers_file = filename.replace('.html', '.headers.json')
+        toc_list.extend([(res_filename, el) for el in get_toc_from_file(headers_file)])
+
+        terms_file = filename.replace('.html', '.terms.json')
         terms_json = generate_terms_info(terms_file)
-        res_file = '{}/{}'.format(output_folder, file.replace(".html", ".valid.html"))
+
+        envs.append((res_file, {'content': content_template.format(content, terms_json)}))
+
+    toc = generate_toc(toc_list)
+    with open('./terms/n_template.html') as f:
+        ninja_template = ''.join(f.readlines())
+        ninja_template = Template(ninja_template)
+
+    with open(template_name) as f:
+        template = ''.join(f.readlines())
+        template = Template(template)
+
+    for res_file, env in envs:
+        env['toc'] = ninja_template.render({'toc': toc})
         with open(res_file, 'w') as f:
-            res_content = template.replace('{{ content }}', content_template.format(content, terms_json))
-            f.write(res_content)
-        print('{} generated'.format(res_file))
+            f.write(template.render(env))
+            print('{} generated'.format(res_file))
 
 
 def main():
@@ -279,3 +336,19 @@ if __name__ == '__main__':
     if no args, './input' './output' uses as default
     """
     main()
+    # toc = [
+    #     {'title': 'hello1', 'anchor': 'hello1', 'tag': 1},
+    #     {'title': 'hello2', 'anchor': 'hello2', 'tag': 2},
+    #     {'title': 'hello3', 'anchor': 'hello3', 'tag': 3},
+    #     {'title': 'hello4', 'anchor': 'hello4', 'tag': 2},
+    #     {'title': 'hello5', 'anchor': 'hello5', 'tag': 3},
+    #     {'title': 'hello6', 'anchor': 'hello6', 'tag': 1},
+    # ]
+    # toc = [('hello.html', el) for el in toc]
+    # toc = generate_toc(toc)
+    #
+    # with open('terms/n_template.html') as f:
+    #     ninja_template = ''.join(f.readlines())
+    #     ninja_template = Template(ninja_template)
+    # page = ninja_template.render({'toc': toc})
+    # print(page)
