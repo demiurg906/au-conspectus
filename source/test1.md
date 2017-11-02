@@ -164,7 +164,7 @@ postvisit(v):
 
 Компонента сильной связности — максимальное по включению подмножество $V$ такое что для $\forall u, v: \exists$ путь $u \rightarrow v$ и $\exists$ путь из $v \rightarrow u$.
 
-<img src="img_test1.jpg" style="width: 20%; float:left; margin-right: 10px">
+<img src="img_test1.jpg" style="width: 30%; float:left; margin-right: 10px">
 
 **Определение**. Метаграф — граф компонент сильной связности.
 

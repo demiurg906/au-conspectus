@@ -7,7 +7,7 @@ start list
 * hey, first item
 * second item
 
-<img src="test.png">
+<img src="img_test0.png">
 <h1> AAA </h1>
 
 $$\sum lihlkjl um_i = O(n^2)$$
