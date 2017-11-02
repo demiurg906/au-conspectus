@@ -12,10 +12,12 @@ const vfile = require('to-vfile')
 const deepClone = require('lodash/fp/cloneDeep')
 const find = require('unist-util-find')
 const inspect = require('unist-util-inspect')
+const fs = require('fs');
 
 process.argv.length <3 && (console.log(`node ${path.basename(process.argv[1])} source.md`) || process.exit(0))
 
 headers = []
+terms = []
 
 
 function addToHeader(options = {}) {
@@ -30,17 +32,18 @@ function addToHeader(options = {}) {
 }
 
 
-function addHrefToEmp(options = {}) {
-    return (node, file) => { href(node) }
+function addSpanToEmp(options = {}) {
+    return (node, file) => { span(node) }
 
-    function href(node) {
+    function span(node) {
         if (node.type == "emphasis") {
             node.type = "html"
             text = node.children[0].value
             node.value = `<span class="term">${text}</span>`
             delete node.children
+            terms.push(text)
         }
-        else (node.children || []).forEach(href)
+        else (node.children || []).forEach(span)
     }
 }
 
@@ -70,17 +73,19 @@ const replaceTitle = value => tree => {
   find(tree, node => node.tagName == 'title').value = value
 }
 
+sourceFileName = process.argv[2]
+sourceFile = vfile.readSync(sourceFileName)
 
 unified()
   .use(remarkParse)
   .use(addToHeader)
-  .use(addHrefToEmp)
+  .use(addSpanToEmp)
   // .use(print)
   .use(remarkRehype, { commonmark: true, allowDangerousHTML: true })
   .use(rehypeSlug)
   .use(rehypeAutolink)
-  .use(wrapByTemplate)
-  .use(replaceTitle, headers[0] || '')
+  // .use(wrapByTemplate)
+  // .use(replaceTitle, headers[0] || '')
   // TODO: insert social meta tags (twitter)
   // TODO: термы:
   //   1. отдельный скрипт, который проходит по markdown,
@@ -112,14 +117,26 @@ unified()
   //      если как-то будет доставаться название файла из переменной file
   //      которая передаётся в трансформеры
   .use(rehypeStringify, { allowDangerousHTML: true })
-  .process(vfile.readSync(process.argv[2]))
+  .process(sourceFile)
   .then(file => {
+    //   console.log(typeof(file))
     // console.log(file.contents)
     file.extname = ".html"
     vfile.writeSync(file)
-    console.log(file);
+    // console.log(file);
   })
   .catch(err => console.log('errors: ', err))
+
+// console.log(terms)
+
+termsFileName = sourceFileName.substr(0, sourceFileName.lastIndexOf(".")) + ".json";
+fs.writeFile(termsFileName, JSON.stringify(terms), function(err) {
+  if(err) {
+      return console.log(err);
+  }
+
+    //   console.log("The file was saved!");
+  });
 
 
 

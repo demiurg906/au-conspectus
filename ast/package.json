@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "fs": "^0.0.1-security",
     "lodash": "^4.17.4",
     "rehype-autolink-headings": "^2.0.2",
     "rehype-document": "^2.0.1",
