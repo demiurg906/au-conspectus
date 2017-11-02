@@ -70,7 +70,6 @@ function formulasProcessing(options = {}) {
             for (i = 0; i < node.children.length; ++i) {
                 child = node.children[i]
                 if (child.type == "text") {
-                    console.log("Im am here")
                     text = child.value
                     child.value = "$" + text + "$"
                 }
