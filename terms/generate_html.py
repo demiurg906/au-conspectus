@@ -252,7 +252,7 @@ def generate_htmls(input_folder='./input', output_folder='./output', template_na
         template = ''.join(f.readlines())
     content_template = '{}\n<script>\nvar terms = {};\n</script>'
     for file in files:
-        filename = '{input_folder}/{file}'.format(input_folder, file)
+        filename = '{}/{}'.format(input_folder, file)
         with open(filename) as f:
             content = ''.join(f.readlines())
 
