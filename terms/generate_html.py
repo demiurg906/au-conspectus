@@ -268,9 +268,9 @@ def generate_htmls(input_folder='./input', output_folder='./output', template_na
 def main():
     if sys.argv[1:]:
         input_folder, output_folder = sys.argv[1:]
-        generate_htmls(input_folder, output_folder, template_name='../ast/template.html')
+        generate_htmls(input_folder, output_folder, template_name='./ast/template.html')
     else:
-        generate_htmls(template_name='../ast/template.html')
+        generate_htmls(template_name='./ast/template.html')
 
 
 if __name__ == '__main__':
