@@ -1,0 +1,31 @@
+sudo: enabled
+
+notifications:
+  email:
+    recipients:
+      - xamgore+travis@ya.ru
+    template:
+      - "%{repository} (%{commit}) : %{message} %{foo} "
+      - "Build details: %{build_url}"
+
+before_script:
+  - cd ast && yarn
+  - chmod +x ./script/build.sh
+
+script: ./script/build.sh
+
+# matrix:
+#   include:
+#     - language: node_js
+#       script: cd ast && yarn
+#       cache: yarn
+#     - script: chmod +x ./script/build.sh
+#       # script: ./script/cibuild
+
+# Assume bundler is being used, therefore
+# the `install` step will run `bundle install` by default.
+script: ./script/build.sh
+
+# TODO: include js, run html-proofer
+# https://jekyllrb.com/docs/continuous-integration/travis-ci/
+# https://ayastreb.me/deploy-jekyll-to-github-pages-with-travis-ci/
