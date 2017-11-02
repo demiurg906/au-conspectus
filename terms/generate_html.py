@@ -166,7 +166,7 @@ def get_neerc_info(term: str):
             return res
 
         preview_text = process_text(regex.findall(r'{{((?>[^{}]+|(?R))*)}}', text)[0].strip())
-        preview_text = f"{regex.findall(r'==.+?==', text)[0].strip()}\n{preview_text}"
+        preview_text = '{}\n{}'.format(regex.findall(r'==.+?==', text)[0].strip(), preview_text)
 
         preview_html = textile(preview_text).replace('<strong', '<b').replace('</strong', '</b')
         return preview_text, preview_html
