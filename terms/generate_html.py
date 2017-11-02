@@ -56,7 +56,7 @@ def get_wiki_info(term: str):
         return None
     title, base_url = info
 
-    url = f'https://ru.wikipedia.org/api/rest_v1/page/summary/{title}'
+    url = 'https://ru.wikipedia.org/api/rest_v1/page/summary/{}'.format(title)
     try:
         resp = requests.get(url)
     except requests.ConnectionError:
@@ -128,7 +128,7 @@ def get_neerc_info(term: str):
 
     # TODO: проверить, что работает на страницах без определений
     def get_text():
-        url = f'{base_url}&action=edit'
+        url = '{}&action=edit'.format(base_url)
         try:
             resp = requests.get(url)
         except requests.ConnectionError:
@@ -242,7 +242,7 @@ def generate_terms_info(filename):
         info = get_info(term)
         if info:
             data[term] = info
-            print(f'info about "{term}" added')
+            print('info about "{}" added'.format(term))
     return json.dumps(data)
 
 
@@ -252,17 +252,17 @@ def generate_htmls(input_folder='./input', output_folder='./output', template_na
         template = ''.join(f.readlines())
     content_template = '{}\n<script>\nvar terms = {};\n</script>'
     for file in files:
-        filename = f'{input_folder}/{file}'
+        filename = '{input_folder}/{file}'.format(input_folder, file)
         with open(filename) as f:
             content = ''.join(f.readlines())
 
         terms_file = filename.replace('.html', '.json')
         terms_json = generate_terms_info(terms_file)
-        res_file = f'{output_folder}/{file.replace(".html", ".valid.html")}'
+        res_file = '{}/{}'.format(output_folder, file.replace(".html", ".valid.html"))
         with open(res_file, 'w') as f:
             res_content = template.replace('{{ content }}', content_template.format(content, terms_json))
             f.write(res_content)
-        print(f'{res_file} generated')
+        print('{} generated'.format(res_file))
 
 
 def main():
