@@ -20,16 +20,16 @@ headers = []
 terms = []
 
 
-function addToHeader(options = {}) {
-  return (node, file) => { header(node) }
-
-  function header(node) {
-    if (node.type == "heading")
-      headers.push(node.children[0].value)
-    else
-      (node.children || []).forEach(header)
-  }
-}
+// function addToHeader(options = {}) {
+//   return (node, file) => { header(node) }
+//
+//   function header(node) {
+//     if (node.type == "heading")
+//       headers.push(node.children[0].value)
+//     else
+//       (node.children || []).forEach(header)
+//   }
+// }
 
 
 function addSpanToEmp(options = {}) {
@@ -49,8 +49,33 @@ function addSpanToEmp(options = {}) {
 
 
 function print(options = {}) {
-  return tree => { console.log(inspect(tree)) }
-  // return tree => { console.log(tree) }
+  // return tree => { console.log(inspect(tree)) }
+  return tree => { console.log(JSON.stringify(tree, null, 2)) }
+}
+
+
+function addTagToList(options = {}) {
+    return (node, file) => { tag(node) }
+
+    function tag(node) {
+        if (node.type == "element" && node.tagName[0] == "h") {
+            tagNumber = parseInt(node.tagName[1]) || 0
+            // console.log([1,2,3,4,5,6].indexOf(tagNumber))
+            if ([1,2,3,4,5,6].indexOf(tagNumber) != -1) {
+                objHeader = {}
+                objHeader.anchor = node.properties.id
+                objHeader.tag = tagNumber
+                for (i = 0; i < node.children.length; ++i) {
+                    child = node.children[i]
+                    if (child.type == "text") {
+                        objHeader.title = child.value
+                    }
+                }
+                headers.push(objHeader)
+            }
+        }
+        else (node.children || []).forEach(tag)
+    }
 }
 
 
@@ -78,12 +103,13 @@ sourceFile = vfile.readSync(sourceFileName)
 
 unified()
   .use(remarkParse)
-  .use(addToHeader)
+  // .use(addToHeader)
   .use(addSpanToEmp)
-  // .use(print)
   .use(remarkRehype, { commonmark: true, allowDangerousHTML: true })
   .use(rehypeSlug)
   .use(rehypeAutolink)
+  .use(addTagToList)
+  // .use(print)
   // .use(wrapByTemplate)
   // .use(replaceTitle, headers[0] || '')
   // TODO: insert social meta tags (twitter)
@@ -127,17 +153,19 @@ unified()
   })
   .catch(err => console.log('errors: ', err))
 
-// console.log(terms)
-
-termsFileName = sourceFileName.substr(0, sourceFileName.lastIndexOf(".")) + ".json";
+termsFileName = sourceFileName.substr(0, sourceFileName.lastIndexOf(".")) + ".terms.json";
 fs.writeFile(termsFileName, JSON.stringify(terms), function(err) {
   if(err) {
       return console.log(err);
   }
+});
 
-    //   console.log("The file was saved!");
-  });
-
+headersFileName = sourceFileName.substr(0, sourceFileName.lastIndexOf(".")) + ".headers.json";
+fs.writeFile(headersFileName, JSON.stringify(headers), function(err) {
+  if(err) {
+      return console.log(err);
+  }
+});
 
 
 // console.log("headers:", headers)
