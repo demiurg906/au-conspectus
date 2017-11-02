@@ -14,13 +14,17 @@ rm -rf _site
 mkdir _site
 
 # clone remote repo to "_site"
-git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages _site
+git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages ./_site
 
 ln -s ./ast/template.html
 
+mkdir ./input
+
 find ./source -name '*.md' -print0 | xargs -n1 --null -t -I {} -- node ./ast/index.js {}
 
-mv ./source/*.html _site/
+python ./terms/generate_html.py ./source ./_site
+
+# mv ./source/*.html _site/
 
 # push
 cd _site
