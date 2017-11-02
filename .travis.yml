@@ -1,9 +1,13 @@
 sudo: enabled
+dist: trusty
 
 language: node_js
 
 node_js:
   - "stable"
+
+python:
+  - "3.6"
 
 cache:
   yarn: true
@@ -13,10 +17,19 @@ cache:
 notifications:
   email:
     recipients:
-      - xamgore+travis@ya.ru
+      # - xamgore+travis@ya.ru
     template:
       - "%{repository} (%{commit}) : %{message} %{foo} "
       - "Build details: %{build_url}"
+
+addons:
+  apt:
+    packages:
+      - "python3"
+      - "python3-pip"
+
+install:
+  - sudo pip3 install regex lxml requests textile
 
 before_script:
   - (cd ast && yarn)
@@ -34,7 +47,7 @@ script: ./script/build.sh
 
 # Assume bundler is being used, therefore
 # the `install` step will run `bundle install` by default.
-script: ./script/build.sh
+
 
 # TODO: include js, run html-proofer
 # https://jekyllrb.com/docs/continuous-integration/travis-ci/

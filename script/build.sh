@@ -1,5 +1,12 @@
 #!/bin/bash
 
+echo "VERSIONS *********************"
+pip --version
+python --version
+python3 --version
+python3.6 --version
+echo "VERSIONS *********************"
+
 # skip if build is triggered by pull request
 if [ "$TRAVIS_PULL_REQUEST" == "true" ]; then
   echo "this is PR, exiting"
@@ -22,7 +29,7 @@ mkdir ./input
 
 find ./source -name '*.md' -print0 | xargs -n1 --null -t -I {} -- node ./ast/index.js {}
 
-python ./terms/generate_html.py ./source ./_site
+python3 ./terms/generate_html.py ./source ./_site
 
 # mv ./source/*.html _site/
 
