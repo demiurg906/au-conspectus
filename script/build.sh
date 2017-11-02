@@ -30,8 +30,9 @@ mkdir ./input
 find ./source -name '*.md' -print0 | xargs -n1 --null -t -I {} -- node ./ast/index.js {}
 
 python3 ./terms/generate_html.py ./source ./_site
-# cp ./source/*.jpg ./source/*.png ./source/*.svg ./site
-# cp ./res/*.css ./_site/res/
+cp ./source/*.jpg ./source/*.png ./source/*.svg ./site
+mkdir ./site/assets
+cp ./res/*.css ./_site/assets
 
 # mv ./source/*.html _site/
 
