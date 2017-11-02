@@ -246,28 +246,36 @@ def generate_terms_info(filename):
     return json.dumps(data)
 
 
-def generate_htmls(input_folder='./', template_name='template.html'):
+def generate_htmls(input_folder='./input', output_folder='./output', template_name='template.html'):
     files = [file for file in os.listdir(input_folder) if file.endswith('.html')]
     with open(template_name) as f:
         template = ''.join(f.readlines())
-    template.replace('{{ content }}', '{}\n<script>\nvar terms = {};\n</script>')
+    content_template = '{}\n<script>\nvar terms = {};\n</script>'
     for file in files:
-        with open(file) as f:
+        filename = f'{input_folder}/{file}'
+        with open(filename) as f:
             content = ''.join(f.readlines())
 
-        terms_file = file.replace('.html', '.json')
+        terms_file = filename.replace('.html', '.json')
         terms_json = generate_terms_info(terms_file)
-        res_file = file.replace('.html', '.valid.html')
+        res_file = f'{output_folder}/{file.replace(".html", ".valid.html")}'
         with open(res_file, 'w') as f:
-            res_content = template.format(content, terms_json)
+            res_content = template.replace('{{ content }}', content_template.format(content, terms_json))
             f.write(res_content)
         print(f'{res_file} generated')
 
 
 def main():
-    generate_htmls()
-
+    if sys.argv[1:]:
+        input_folder, output_folder = sys.argv[1:]
+        generate_htmls(input_folder, output_folder, template_name='../ast/template.html')
+    else:
+        generate_htmls(template_name='../ast/template.html')
 
 
 if __name__ == '__main__':
+    """
+    usage: python generate_html.py input_folder output_folder
+    if no args, './input' './output' uses as default
+    """
     main()
