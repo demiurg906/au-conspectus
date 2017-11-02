@@ -1,5 +1,15 @@
 sudo: enabled
 
+language: node_js
+
+node_js:
+  - "stable"
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
 notifications:
   email:
     recipients:
@@ -9,8 +19,8 @@ notifications:
       - "Build details: %{build_url}"
 
 before_script:
-  - cd ast && yarn
-  - chmod +x ./script/build.sh
+  - (cd ast && yarn)
+  - sudo chmod +x ./script/build.sh
 
 script: ./script/build.sh
 
