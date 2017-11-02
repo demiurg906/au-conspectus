@@ -16,8 +16,11 @@ mkdir _site
 # clone remote repo to "_site"
 git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages _site
 
-# build with Jekyll into "_site"
-bundle exec find ./source -name '*.md' -print0 | xargs -n1 --null -t -- node ast/index.js
+ln -s ./ast/template.html
+
+find ./source -name '*.md' -print0 | xargs -n1 --null -t -I {} -- node ./ast/index.js {}
+
+mv ./source/*.html _site/
 
 # push
 cd _site
