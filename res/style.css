@@ -162,6 +162,7 @@ pre code {
   display: none;
   transition: opacity 0.5s;
   opacity: 0;
+  cursor: pointer;
 }
 
 .term {
