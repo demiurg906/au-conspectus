@@ -11,6 +11,7 @@ const doc = require('rehype-document')
 const vfile = require('to-vfile')
 const deepClone = require('lodash/fp/cloneDeep')
 const math = require('remark-math')
+const highlight = require('remark-highlight.js')
 const fs = require('fs');
 
 process.argv.length <3 && (console.log(`node ${path.basename(process.argv[1])} source.md`) || process.exit(0))
@@ -90,6 +91,7 @@ unified()
   .use(rehypeAutolink)
   .use(addTagToList)
   .use(formulasProcessing)
+  .use(highlight)
   .use(rehypeStringify, { allowDangerousHTML: true })
   .process(sourceFile)
   .then(file => {

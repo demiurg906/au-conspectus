@@ -2,9 +2,6 @@
 
 echo "VERSIONS *********************"
 pip3 show textile
-pip3 show regex
-pip3 show lxml
-pip3 show requests
 echo "VERSIONS *********************"
 
 # skip if build is triggered by pull request
@@ -22,6 +19,8 @@ mkdir _site
 
 # clone remote repo to "_site"
 git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages ./_site
+
+rm ./_site/README.md
 
 ln -s ./ast/template.html
 
