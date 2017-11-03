@@ -46,6 +46,11 @@ git push --force origin gh-pages
 
 # ssh
 echo 'Send gh-pages to mmcs server...'
+ping users.mmcs.sfedu.ru -c1
+echo sshpass -p "$USERS_PASSWD" scp -r ./ xamgore@users.mmcs.sfedu.ru:/home/xamgore/public_html
 sshpass -p "$USERS_PASSWD" scp -r ./ xamgore@users.mmcs.sfedu.ru:/home/xamgore/public_html
 
 # sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{ rm -rf ./public_html; git clone "https://github.com/xamgore/au-conspectus.git" --branch gh-pages ./public_html; }'
+
+# telegram
+TM_TOKEN="$TM_TOKEN" WHERE='-239361319' MSG='new build' node index
