@@ -6,7 +6,7 @@ def prepare_message(s: str):
     url = ''
     if res.endswith('.md'):
         name = res.split('/')[-1]
-        name = name.replace('.md', '.valid.html')
+        name = name.replace('.md', '.html')
         url = 'https://xamgore.github.io/au-conspectus/{}'.format(name)
     return res, url
 

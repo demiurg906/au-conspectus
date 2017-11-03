@@ -287,7 +287,7 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
         filename = '{}/{}'.format(input_folder, file)
         with open(filename) as f:
             content = ''.join(f.readlines())
-        res_filename = file.replace(".html", ".valid.html")
+        res_filename = file  # file.replace(".html", ".valid.html")
         res_file = '{}/{}'.format(output_folder, res_filename)
 
         headers_file = filename.replace('.html', '.headers.json')
@@ -312,7 +312,11 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
             f.write(template.render(env))
             print('{} generated'.format(res_file))
     with open('{}/index.html'.format(output_folder), 'w') as f:
-        f.write(template.render({'content': ninja_template.render({'toc': toc})}))
+        toc_html = ninja_template.render({'toc': toc})
+        f.write(template.render({'content': toc_html}))
+        print('--------------------------------------------------------------')
+        print(toc_html)
+        print('--------------------------------------------------------------\n')
 
 
 def main():
