@@ -21,6 +21,7 @@ mkdir _site
 git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages ./_site
 
 rm -f ./_site/README.md
+touch ./_site/.nojekyll
 
 ln -s ./ast/template.html
 
