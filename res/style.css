@@ -53,9 +53,30 @@ h4 { font-weight: bold; }
 
 p {
   margin: 0.5em 0 1em 0;
+  white-space: pre-wrap;
 }
 
 ol, ul { list-style: none; }
+
+.toc {
+  font-size: 0.9em;
+}
+
+.toc li {
+  line-height: 1.2;
+  padding-top: 0.8em;
+  padding-left: 1em;
+  margin-bottom: 10px;
+}
+
+.toc > ol > li, .toc > ul > li {
+  padding-left: 0;
+}
+
+.toc li a {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
 a {
   text-decoration: none;
@@ -75,8 +96,12 @@ a:hover {
   list-style: square inside;
 }
 
-.content ul li {
+.content li, .content li {
   margin-bottom: 10px;
+}
+
+.content ol {
+  list-style: decimal;
 }
 
 .content .term {
@@ -104,18 +129,24 @@ code {
   background: #f4f4f4;
   border-radius: 3.7px;
   color: #616161;
+  color: #b64343;
   white-space: pre-wrap;
 }
 
 pre {
   font-family: monospace, monospace;
   border: solid 1px #c8ccd1;
-  white-space: pre-wrap;
-  /*padding: 0.5em;*/
+  /*white-space: pre-wrap;*/
+  white-space: pre;
+  margin: 0.5em;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 pre code {
   all: inherit;
   border: none;
   padding: 0.5em;
+  border: none;
+  margin: none;
 }

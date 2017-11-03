@@ -1,14 +1,14 @@
 <ol>
     {% for h1 in toc %}
-    <li>
+    <li class="h1">
         <a href="{{ h1.anchor }}">{{ h1.title }}</a>
         <ul>
             {% for h2 in h1.h2 %}
-            <li>
+            <li class="h2">
                 <a href="{{ h2.anchor }}">{{ h2.title }}</a>
                 <ul>
                     {% for h3 in h2.h3 %}
-                    <li>
+                    <li class="h3">
                         <a href="{{ h3.anchor }}">{{ h3.title }}</a>
                     </li>
                     {% endfor %}

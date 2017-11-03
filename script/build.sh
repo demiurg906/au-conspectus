@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "VERSIONS *********************"
-pip show textile
-pip show regex
-pip show lxml
-pip show requests
+pip3 show textile
+pip3 show regex
+pip3 show lxml
+pip3 show requests
 echo "VERSIONS *********************"
 
 # skip if build is triggered by pull request
