@@ -61,4 +61,4 @@ git push --force origin gh-pages
 # sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{ rm -rf ./public_html; git clone "https://github.com/xamgore/au-conspectus.git" --branch gh-pages ./public_html; }'
 
 # telegram
-# TM_TOKEN="$TM_TOKEN" WHERE='-239361319' MSG='new build' node index
+TM_TOKEN="$TM_TOKEN" CHAT='-239361319' MSG='hi' node ./telegram/index
