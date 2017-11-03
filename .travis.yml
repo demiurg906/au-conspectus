@@ -6,9 +6,6 @@ language: node_js
 node_js:
   - "stable"
 
-# script:
-#   - mkdir /tmp/pip_build_root
-
 cache:
   yarn: true
   pip3: true
@@ -43,10 +40,7 @@ install:
 
 before_script:
   - (cd ast && yarn)
-  # - (cd telegram && yarn)
+  - (cd telegram && yarn)
   - sudo chmod +x ./script/build.sh
 
 script: ./script/build.sh
-
-# after_success:
-#   - Rscript -e 'library(covr); codecov(token = "[key-here]")'
