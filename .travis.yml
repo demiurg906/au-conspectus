@@ -35,8 +35,8 @@ addons:
       - "python3-pip"
 
 before_install:
-  - sudo add-apt-repository ppa:bauruine/sshpass
-  - sudo apt-get update
+  - sudo add-apt-repository ppa:bauruine/sshpass -y
+  - sudo apt-get update -q
 
 install:
   - sudo pip3 install regex lxml requests textile cssselect jinja2
