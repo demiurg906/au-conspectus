@@ -30,6 +30,7 @@ notifications:
 addons:
   apt:
     packages:
+      - "sshpass"
       - "python3"
       - "python3-pip"
 
