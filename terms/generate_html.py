@@ -218,7 +218,6 @@ def get_info(term: str):
     return res
 
 
-# def get_terms(input_folder):
 def get_terms(filename):
     with open(filename) as f:
         return json.load(f)
@@ -229,14 +228,12 @@ def get_terms(filename):
         # return res
 
 
-# def generate_terms_info(input_folder='./'):
 def generate_terms_info(filename):
     """
     дописывает информацию он новых терминах из
     `get_terms` в индекс
     """
     data = {}
-    # for term in get_terms(input_folder):
     for term in get_terms(filename):
         if term in data:
             continue
@@ -316,10 +313,11 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
         template = Template(template)
 
     for res_file, env in envs:
-        env['toc'] = ninja_template.render({'toc': toc})
         with open(res_file, 'w') as f:
             f.write(template.render(env))
             print('{} generated'.format(res_file))
+    with open('{}/index.html'.format(output_folder)) as f:
+        f.write(template.render({'content': ninja_template.render({'toc': toc})}))
 
 
 def main():
