@@ -26,12 +26,23 @@ window.onload = e => {
 
   hljs.initHighlighting()
 
-  document.onmouseup = e => {
-    var r = window.getSelection();
-    if (r.toString().rangeCount < 2) return;
-    console.log(getElementXpath(r));
+  // document.getElementById(h).scrollIntoView()
 
-    var msg = `Ребят, кажется у вас [ошибка](kek) в фразе \`${r.toString}\`, в параграфе:\n\`\`\`${r.anchorNode.wholeText}\`\`\`\n\n`
+  document.onmouseup = e => {
+    r = window.getSelection();
+    if (r.toString().rangeCount < 2) return;
+
+    var $button = document.querySelector('#mistake')
+    $button.style.display = 'block'
+
+    var rect = r.getRangeAt(0).getBoundingClientRect();
+    var relative = document.body.parentNode.getBoundingClientRect();
+    ele.style.top   = `${r.bottom - relative.top}px`;
+    ele.style.right = `${-r.right - relative.right}px`;
+    $button.style.opacity = 1
+
+    var path = getElementXpath(r.parentNode);
+    var msg = `Ребят, кажется у вас [ошибка](${location.href}?p=${path}) в фразе \`${r.toString}\`, в параграфе:\n\`\`\`${r.anchorNode.wholeText}\`\`\`\n\n`
     var title = `Ошибка в конспекте`
     var link = `https://github.com/xamgore/au-conspectus/issues/new?title=${title}&body=${msg}`
   }
@@ -42,6 +53,8 @@ window.onload = e => {
   <!-- <section class="toc">
     {{ toc }}
   </section> -->
+
+  <div id="mistake"></div>
 
   <a data-bypass="true" href="https://github.com/xamgore/au-conspectus/issues/new" class="page-link-to-github" target="_blank" title="Add issue on GitHub">
       <i class="github-icon"></i>
