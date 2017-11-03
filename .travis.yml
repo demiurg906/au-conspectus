@@ -35,7 +35,7 @@ addons:
       - "python3-pip"
 
 install:
-  - sudo pip3 install regex lxml requests textile cssselect jinja2
+  # - sudo pip3 install regex lxml requests textile cssselect jinja2
 
 before_script:
   - (cd ast && yarn)
