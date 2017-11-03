@@ -1,9 +1,10 @@
 #!/bin/bash
 
+sshpass -V
 
 echo sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{rm -rf ./public_html; mkdir public_html;}'
-sshpass -v -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{rm -rf ./public_html; mkdir public_html;}'
-exit 1
+sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{rm -rf ./public_html; mkdir public_html;}'
+# exit 1
 
 echo "VERSIONS *********************"
 pip3 show textile
