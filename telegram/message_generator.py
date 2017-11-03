@@ -1,19 +1,32 @@
 import sys
 
 
-def prepare_string(s: str):
+def prepare_message(s: str):
     res = ' '.join(s.split()[1:])
-    return res
+    url = ''
+    if res.endswith('.md'):
+        name = res.split('/')[-1]
+        name = name.replace('.md', '.valid.html')
+        url = 'https://xamgore.github.io/au-conspectus/{}'.format(name)
+    return res, url
+
+
+def print_message(message: str, info: str, removed: bool = False):
+    res, url = prepare_message(message)
+    print('"{}" {}'.format(res, info))
+    if url and not removed:
+        print('take a look: {}'.format(url))
+    print()
 
 
 if __name__ == '__main__':
     ms = sys.stdin.readlines()
     for message in reversed(ms):
-        if message.startswith('M'):
-            print('"{}" modified '.format(prepare_string(message)))
-        elif message.startswith('A'):
-            print('"{}" added'.format(prepare_string(message)))
+        if message.startswith('A'):
+            print_message(message, 'added')
+        elif message.startswith('M'):
+            print_message(message, 'modified')
         elif message.startswith('D'):
-            print('"{}" removed'.format(prepare_string(message)))
+            print_message(message, 'removed', True)
         else:
             break
