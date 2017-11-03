@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "VERSIONS *********************"
-pip --version
-python --version
-python3 --version
-python3.6 --version
+pip show textile
+pip show regex
+pip show lxml
+pip show requests
 echo "VERSIONS *********************"
 
 # skip if build is triggered by pull request

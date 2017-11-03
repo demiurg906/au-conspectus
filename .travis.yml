@@ -6,14 +6,15 @@ language: node_js
 node_js:
   - "stable"
 
-python:
-  - "3.6"
+# script:
+#   - mkdir /tmp/pip_build_root
 
 cache:
   yarn: true
   directories:
     - node_modules
     - /usr/lib/python3/dist-packages
+    # - /tmp/pip_build_root/
 
 notifications:
   email:
@@ -37,3 +38,6 @@ before_script:
   - sudo chmod +x ./script/build.sh
 
 script: ./script/build.sh
+
+# after_success:
+#   - Rscript -e 'library(covr); codecov(token = "[key-here]")'
