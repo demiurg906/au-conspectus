@@ -139,7 +139,6 @@ pre {
   border: solid 1px #c8ccd1;
   white-space: pre;
   margin: 0.5em 0 0.9em;
-  overflow-x: auto;
   max-width: 100%;
 }
 
@@ -147,6 +146,7 @@ pre code {
   all: inherit;
   border: none;
   padding: 0.5em;
+  overflow-x: auto;
   border: 0;
   margin: 0;
 }
