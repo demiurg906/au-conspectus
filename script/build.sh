@@ -46,4 +46,6 @@ git push --force origin gh-pages
 
 # ssh
 echo 'Send gh-pages to mmcs server...'
-sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{ rm -rf ./public_html; git clone "https://github.com/xamgore/au-conspectus.git" --branch gh-pages ./public_html; }'
+sshpass -p "$USERS_PASSWD" scp -r ./ xamgore@users.mmcs.sfedu.ru:/home/xamgore/public_html
+
+# sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{ rm -rf ./public_html; git clone "https://github.com/xamgore/au-conspectus.git" --branch gh-pages ./public_html; }'
