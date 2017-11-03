@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# sshpass -V
-#
-# echo sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{rm -rf ./public_html; mkdir public_html;}'
-# sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{rm -rf ./public_html; mkdir public_html;}'
-# exit 1
-
 echo "VERSIONS *********************"
 pip3 show textile
 echo "VERSIONS *********************"
@@ -25,6 +19,8 @@ mkdir _site
 
 # clone remote repo to "_site"
 git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages ./_site
+
+git rm -rf ./_site/*
 
 rm -f ./_site/README.md
 touch ./_site/.nojekyll
