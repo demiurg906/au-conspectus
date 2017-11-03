@@ -40,5 +40,5 @@ cd _site
 git config user.email "no-reply@github.com"
 git config user.name "Travis Bot"
 git add --all
-git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
+git commit --amend -m "Travis #$TRAVIS_BUILD_NUMBER"
 git push --force origin gh-pages
