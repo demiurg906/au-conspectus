@@ -1,12 +1,11 @@
 'use strict'
 
+let $ = s => document.querySelectorAll(s)
 
-// console.log("TEST")
+var links = $('.term')
 
-
-let $ = s => document.querySelector(s)
-
-var a = $('.term')
-
-a.setAttribute("data-popup", terms[a.innerText].wiki.extract)
-a.setAttribute("href", terms[a.innerText].wiki.wiki_url)
+for (var i=0; i < links.length; ++i) {
+    var a = links[i]
+    a.setAttribute("data-popup", terms[a.innerText].wiki.extract)
+    a.setAttribute("href", terms[a.innerText].wiki.wiki_url)
+}
