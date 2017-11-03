@@ -20,7 +20,7 @@ mkdir _site
 # clone remote repo to "_site"
 git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages ./_site
 
-rm ./_site/README.md
+rm -f ./_site/README.md
 
 ln -s ./ast/template.html
 

@@ -15,9 +15,9 @@ cache:
   custom_install: true
   directories:
     - node_modules
-    - /usr/lib/python3/dist-packages
-    - /usr/local/lib/python3.4/dist-packages
-    - $HOME/.cache/pip
+    # - /usr/lib/python3/dist-packages
+    # - /usr/local/lib/python3.4/dist-packages
+    - $HOME/.cache/pip3
 
 notifications:
   email:
