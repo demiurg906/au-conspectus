@@ -45,4 +45,5 @@ git commit --amend -m "Travis #$TRAVIS_BUILD_NUMBER"
 git push --force origin gh-pages
 
 # ssh
+echo 'Send gh-pages to mmcs server...'
 sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{ rm -rf ./public_html; git clone "https://github.com/xamgore/au-conspectus.git" --branch gh-pages ./public_html; }'
