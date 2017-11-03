@@ -37,14 +37,14 @@ window.onload = e => {
 
     var rect = r.getRangeAt(0).getBoundingClientRect();
     var relative = document.body.parentNode.getBoundingClientRect();
-    $button.style.top   = `${r.bottom - relative.top}px`;
-    $button.style.right = `${-r.right - relative.right}px`;
+    $button.style.top   = `${r.bottom}px`;
+    $button.style.right = `${r.right}px`;
     $button.style.opacity = 1
 
-    var path = getElementXpath(r.parentNode);
-    var msg = `Ребят, кажется у вас [ошибка](${location.href}?p=${path}) в фразе \`${r.toString}\`, в параграфе:\n\`\`\`${r.anchorNode.wholeText}\`\`\`\n\n`
+    var path = getElementXpath(r.anchorNode.parentNode);
+    var msg = `Ребят, кажется у вас [ошибка](${location.href.replace(location.href, '')}?p=${encodeURIComponent(path)}) в фразе \`${r.toString()}\`, в параграфе:\n> ${r.anchorNode.parentNode.innerText}\n\n`;
     var title = `Ошибка в конспекте`
-    var link = `https://github.com/xamgore/au-conspectus/issues/new?title=${title}&body=${msg}`
+    var link = `https://github.com/xamgore/au-conspectus/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(msg)}`;
   }
 
   // document.getElementById(h).scrollIntoView();
