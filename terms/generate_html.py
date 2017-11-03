@@ -17,13 +17,7 @@ def convert_encoding(s):
     return s.encode('ISO-8859-1', 'ignore').decode('utf-8')
 
 
-def search_wiki(term: str):
-    """
-    находит ссылку на страницу в вики
-    :param term: термин
-    :return: title, url
-    """
-    url = WIKI_SEARCH_URL_TEMPLATE.format(term)
+def get_tree_by_url(url: str):
     try:
         resp = requests.get(url)
     except requests.ConnectionError:
@@ -32,6 +26,27 @@ def search_wiki(term: str):
     if resp.status_code != 200:
         return None
     tree = lxml.html.fromstring(resp.content)
+    return tree
+
+
+def search_wiki(term: str):
+    """
+    находит ссылку на страницу в вики
+    :param term: термин
+    :return: title, url
+    """
+    url = WIKI_SEARCH_URL_TEMPLATE.format(term)
+    tree = get_tree_by_url(url)
+    if tree is None:
+        return
+
+    did_you_mean = CSSSelector('div.searchdidyoumean a')(tree)
+    if did_you_mean:
+        url = 'https://ru.wikipedia.org{}'.format(did_you_mean[0].attrib['href'])
+        tree = get_tree_by_url(url)
+        if tree is None:
+            return None
+
     finded_sel = CSSSelector('.mw-search-results')
     finded = finded_sel(tree)
     if finded:
@@ -94,14 +109,9 @@ def search_neerc(term: str):
     :return: title, url
     """
     url = NEERC_SEARCH_URL_TEMPLATE.format(term)
-    try:
-        resp = requests.get(url)
-    except requests.ConnectionError:
-        # TODO: написать в лог
+    tree = get_tree_by_url(url)
+    if tree is None:
         return None
-    if resp.status_code != 200:
-        return None
-    tree = lxml.html.fromstring(resp.content)
     finded_sel = CSSSelector('.mw-search-results')
     finded = finded_sel(tree)
     if finded:
@@ -130,14 +140,9 @@ def get_neerc_info(term: str):
     # TODO: проверить, что работает на страницах без определений
     def get_text():
         url = '{}&action=edit'.format(base_url)
-        try:
-            resp = requests.get(url)
-        except requests.ConnectionError:
-            # TODO: написать в лог
+        tree = get_tree_by_url(url)
+        if tree is None:
             return None
-        if resp.status_code != 200:
-            return None
-        tree = lxml.html.fromstring(resp.content)
         el = CSSSelector('#wpTextbox1')(tree)[0]
         text = convert_encoding(el.text)
 
@@ -173,14 +178,9 @@ def get_neerc_info(term: str):
         return preview_text, preview_html
 
     def get_thumbnail():
-        try:
-            resp = requests.get(base_url)
-        except requests.ConnectionError:
-            # TODO: написать в лог
+        tree = get_tree_by_url(base_url)
+        if tree is None:
             return None
-        if resp.status_code != 200:
-            return None
-        tree = lxml.html.fromstring(resp.content)
         thumbnails = CSSSelector('img.thumbimage')(tree)
         if thumbnails is None or not thumbnails:
             return None
@@ -221,11 +221,6 @@ def get_info(term: str):
 def get_terms(filename):
     with open(filename) as f:
         return json.load(f)
-        # res = set()
-        # for file in os.listdir(input_folder):
-        #     if file.endswith('.json'):
-        #         res.update(json.load(open(file)))
-        # return res
 
 
 def generate_terms_info(filename):
@@ -316,7 +311,7 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
         with open(res_file, 'w') as f:
             f.write(template.render(env))
             print('{} generated'.format(res_file))
-    with open('{}/index.html'.format(output_folder)) as f:
+    with open('{}/index.html'.format(output_folder), 'w') as f:
         f.write(template.render({'content': ninja_template.render({'toc': toc})}))
 
 
