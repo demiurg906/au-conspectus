@@ -30,7 +30,10 @@ window.onload = e => {
     var r = window.getSelection();
     if (r.toString().rangeCount < 2) return;
     console.log(getElementXpath(r));
-    //r.anchorNode.wholeText
+
+    var msg = `Ребят, кажется у вас [ошибка](kek) в фразе \`${r.toString}\`, в параграфе:\n\`\`\`${r.anchorNode.wholeText}\`\`\`\n\n`
+    var title = `Ошибка в конспекте`
+    var link = `https://github.com/xamgore/au-conspectus/issues/new?title=${title}&body=${msg}`
   }
 };
 </script>
