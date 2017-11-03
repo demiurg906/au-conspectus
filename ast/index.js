@@ -27,7 +27,7 @@ function addSpanToEmp(options = {}) {
         if (node.type == "emphasis") {
             node.type = "html"
             text = node.children[0].value
-            node.value = `<span class="term">${text}</span>`
+            node.value = `<a class="term">${text}</a>`
             delete node.children
             terms.push(text)
         }
