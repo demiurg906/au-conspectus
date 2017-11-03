@@ -39,7 +39,7 @@ install:
 
 before_script:
   - (cd ast && yarn)
-  - (cd telegram && yarn)
+  # - (cd telegram && yarn)
   - sudo chmod +x ./script/build.sh
 
 script: ./script/build.sh
