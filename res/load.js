@@ -46,7 +46,7 @@ window.onload = e => {
 
     node.style.border = "4px dashed rgba(244, 67, 54, 0.58)"
     node.style.margin = '-10px'
-    node.style.padding = '10px'
+    node.style.padding = '5px 10px'
     node.scrollIntoView()
   }
 
