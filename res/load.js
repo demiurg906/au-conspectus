@@ -45,26 +45,26 @@ window.onload = e => {
     var node = document.evaluate(paragraph, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
 
     node.style.border = "4px dashed rgba(244, 67, 54, 0.58)"
+    node.style.margin = '-10px'
+    node.style.padding = '10px'
     node.scrollIntoView()
   }
 
 
   document.onmouseup = e => {
     r = window.getSelection();
-    if (r.toString().rangeCount < 2) return;
+    if (r.toString().length < 2) return;
 
-    // var $button = document.querySelector('#mistake')
-    // $button.style.display = 'block'
-    //
-    // var rect = r.getRangeAt(0).getBoundingClientRect();
-    // var relative = document.body.parentNode.getBoundingClientRect();
-    // $button.style.top   = `${r.bottom}px`;
-    // $button.style.right = `${r.right}px`;
-    // $button.style.opacity = 1
+    var $button = document.querySelector('#mistake')
+    var rect = r.getRangeAt(0).getBoundingClientRect()
+    var relative = document.body.parentNode.getBoundingClientRect()
+    $button.style.top   = `${rect.bottom - relative.top}px`
+    $button.style.right = `${-rect.right + relative.right}px`
+    $button.style.display = 'block'
+    $button.style.opacity = 1
 
     var wholeParagraph = r.anchorNode.parentNode.innerText
     var cite = wholeParagraph.split('\n').map(s => '> ' + s).join('\n')
-
     var url = location.href.replace(location.hash, '')
     var xpath = getElementXpath(r.anchorNode.parentNode)
     var backlink = `${url}?p=${encodeURIComponent(encodeB64(xpath))}`
@@ -74,5 +74,7 @@ window.onload = e => {
     var title = encodeURIComponent(`Ошибка в конспекте`)
     var link = `${newIssue}?title=${title}&body=${encodeURIComponent(msg)}`
     console.log(link)
+
+    $button.onclick = () => window.open(link, '_blank').focus()
   }
 };
