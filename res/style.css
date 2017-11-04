@@ -16,8 +16,6 @@ body {
   color: #222;
   padding: 1em 16px;
   line-height: 1.4em;
-  max-width: 700px;
-  min-width: 480px;
   width: 100%;
   font-size: 1.25em;
   font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
@@ -90,6 +88,9 @@ a:hover {
 .content {
   word-wrap: break-word;
   line-height: 1.65;
+  max-width: 712px;
+  width: 100%;
+  margin: auto;
 }
 
 .content ul {
@@ -109,6 +110,10 @@ a:hover {
   text-decoration: underline;
   text-decoration-style: dotted;
   text-decoration-color: red;
+}
+
+.content img {
+  max-width: 100%;
 }
 
 .katex-display {
