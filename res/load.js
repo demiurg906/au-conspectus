@@ -32,7 +32,7 @@ var getQueryParam = name => {
 
     if (!results) return null
     if (!results[2]) return ''
-    return decodeB64(decodeURIComponent(results[2].replace(/\+/g, " ")))
+    return decodeURIComponent(results[2].replace(/\+/g, " "))
 }
 
 
@@ -42,7 +42,7 @@ window.onload = e => {
 
   var paragraph = getQueryParam('p')
   if (paragraph) {
-    var node = document.evaluate(paragraph, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
+    var node = document.evaluate(decodeB64(paragraph), document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
 
     node.style.border = "4px dashed rgba(244, 67, 54, 0.58)"
     node.style.margin = '-10px'
@@ -51,7 +51,7 @@ window.onload = e => {
   }
 
 
-  document.onmouseup = e => {
+  var offerChange = () => {
     r = window.getSelection();
     if (r.toString().length < 2) return;
 
@@ -65,16 +65,19 @@ window.onload = e => {
 
     var wholeParagraph = r.anchorNode.parentNode.innerText
     var cite = wholeParagraph.split('\n').map(s => '> ' + s).join('\n')
-    var url = location.href.replace(location.hash, '')
+    var url = location.href.replace(location.hash, '').replace(location.search, '')
     var xpath = getElementXpath(r.anchorNode.parentNode)
     var backlink = `${url}?p=${encodeURIComponent(encodeB64(xpath))}`
 
     var newIssue = 'https://github.com/xamgore/au-conspectus/issues/new'
-    var msg = `Ребят, кажется у вас [ошибка](${backlink}) во фразе\`${r.toString()}\`, в параграфе:\n${cite}\n\n`
+    var msg = `Ребят, кажется у вас [ошибка](${backlink}) во фразе \`${r.toString()}\`, в параграфе:\n${cite}\n\n`
     var title = encodeURIComponent(`Ошибка в конспекте`)
     var link = `${newIssue}?title=${title}&body=${encodeURIComponent(msg)}`
     console.log(link)
 
     $button.onclick = () => window.open(link, '_blank').focus()
   }
+
+  document.onmouseup = e => offerChange()
+  document.touchend = e => { e.preventDefault(); offerChange(); }
 };
