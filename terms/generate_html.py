@@ -310,6 +310,7 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
             for line in f:
                 if line.startswith('#'):
                     meta_title += '. ' + line.replace('#', '').strip()
+                    break
 
         envs.append((res_file, {
             'content': content_template.format(content, terms_json),
