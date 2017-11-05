@@ -34,7 +34,31 @@ MathJax.Hub.Config({
   </div>
 
   <article class="content">
-    {{ content }}
+      <div>
+          {% if left_page %}
+          <div class="left-ref">
+              <a href="{{ left_page }}">Предыдущая лекция</a>
+          </div>
+          {% endif %}
+          {% if right_page %}
+          <div class="right-ref">
+              <a href="{{ right_page }}">Следующая лекция</a>
+          </div>
+          {% endif %}
+      </div>
+      {{ content }}
+      <div>
+          {% if left_page %}
+          <div class="left-ref">
+              <a href="{{ left_page }}">Предыдущая лекция</a>
+          </div>
+          {% endif %}
+          {% if right_page %}
+          <div class="right-ref">
+              <a href="{{ right_page }}">Следующая лекция</a>
+          </div>
+          {% endif %}
+      </div>
   </article>
 <script src="assets/popup.js"></script>
 </body>

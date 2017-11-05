@@ -283,11 +283,13 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
     content_template = '{}\n<script>\nvar terms = {};\n</script>'
     envs = []
     toc_list = []
+    html_filenames = []
     for file in files:
         filename = '{}/{}'.format(input_folder, file)
         with open(filename) as f:
             content = ''.join(f.readlines())
-        res_filename = file  # file.replace(".html", ".valid.html")
+        res_filename = file
+        html_filenames.append(res_filename)
         res_file = '{}/{}'.format(output_folder, res_filename)
 
         headers_file = filename.replace('.html', '.headers.json')
@@ -307,7 +309,16 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
         template = ''.join(f.readlines())
         template = Template(template)
 
-    for res_file, env in envs:
+    prev_next_refs = []
+    href_template = 'https://xamgore.github.io/au-conspectus/{}'
+    for i in range(len(html_filenames)):
+        left = None if i == 0 else href_template.format(html_filenames[i-1])
+        right = None if i == len(html_filenames) - 1 else href_template.format(html_filenames[i+1])
+        prev_next_refs.append((left, right))
+
+    for (res_file, env), (left, right) in zip(envs, prev_next_refs):
+        env['left_page'] = left
+        env['right_page'] = right
         with open(res_file, 'w') as f:
             f.write(template.render(env))
             print('{} generated'.format(res_file))
