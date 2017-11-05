@@ -18,7 +18,7 @@ rm -rf _site
 mkdir _site
 
 # clone remote repo to "_site"
-git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages ./_site
+git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages --depth=1 ./_site
 
 ( cd ./_site && git rm -rf --ignore-unmatch ./* )
 ( cd ./_site && rm -rf ./* )
