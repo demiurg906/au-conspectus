@@ -1,10 +1,5 @@
 #!/bin/bash
 
-echo "VERSIONS *********************"
-node --version
-python --version
-echo "VERSIONS *********************"
-
 # skip if build is triggered by pull request
 if [ "$TRAVIS_PULL_REQUEST" == "true" ]; then
   echo "this is PR, exiting"
@@ -21,26 +16,28 @@ mkdir _site
 # clone remote repo to "_site"
 git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages --depth=1 ./_site
 
+# clean repo from all files
 ( cd ./_site && git rm -rf --ignore-unmatch ./* )
 ( cd ./_site && rm -rf ./* )
 
-rm -f ./_site/README.md
+# persuade github not to use jekyll
 touch ./_site/.nojekyll
 
+# make the template accessible from current dir
 ln -s ./ast/template.html
 
+# using the template, convert source markdown to html + json
 mkdir ./input
-
 find ./source -name '*.md' -print0 | xargs -n1 --null -t -I {} -- node ./ast/index.js {}
 
+# generate the contents, move images & htmls the root folder
 python ./terms/generate_html.py ./source ./_site
-cp ./source/*.jpg ./source/*.png ./source/*.svg ./_site 2>/dev/null || :
+cp ./source/*.jpg ./source/*.png ./source/*.svg ./_site 2> /dev/null || :
+
 mkdir -p ./_site/assets
 cp ./res/*.css ./res/*.js ./_site/assets 2>/dev/null || :
 
-# mv ./source/*.html _site/
-
-# push
+# push generated htmls back to repository
 cd _site
 git config user.email "no-reply@github.com"
 git config user.name "Travis Bot"
@@ -55,10 +52,10 @@ git push --force origin gh-pages
 # sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{rm -rf ./public_html; mkdir public_html;}'
 # echo sshpass -p "$USERS_PASSWD" scp -r ._site/ xamgore@users.mmcs.sfedu.ru:/home/xamgore/public_html
 # sshpass -p "$USERS_PASSWD" scp -r ._site/ xamgore@users.mmcs.sfedu.ru:/home/xamgore/public_html
-
 # sshpass -p "$USERS_PASSWD" ssh xamgore@users.mmcs.sfedu.ru '{ rm -rf ./public_html; git clone "https://github.com/xamgore/au-conspectus.git" --branch gh-pages ./public_html; }'
 
-# telegram
+
+# send notification to telegram chat
 cd ..
 
 git show --name-status --oneline | tail -n +2
