@@ -171,8 +171,11 @@ def get_neerc_info(term: str):
             res = regex.sub(r"'''\s*(.*?)\s*'''", ' *\g<1>* ', res)
             return res
 
-        preview_text = process_text(regex.findall(r'{{((?>[^{}]+|(?R))*)}}', text)[0].strip())
-        preview_text = '{}\n{}'.format(regex.findall(r'==.+?==', text)[0].strip(), preview_text)
+        try:
+            preview_text = process_text(regex.findall(r'{{((?>[^{}]+|(?R))*)}}', text)[0].strip())
+            preview_text = '{}\n{}'.format(regex.findall(r'==.+?==', text)[0].strip(), preview_text)
+        except IndexError:
+            return None
 
         preview_html = textile(preview_text).replace('<strong', '<b').replace('</strong', '</b')
         return preview_text, preview_html
