@@ -59,5 +59,8 @@ git push --force origin gh-pages
 
 # telegram
 cd ..
-message=$(git show --name-status | python3 ./telegram/message_generator.py)
+
+git show --name-status --oneline | tail -n +2
+message=$(git show --name-status --oneline | tail -n +2 | python3 ./telegram/message_generator.py)
+echo "$message"
 TM_TOKEN="$TM_TOKEN" CHAT='-239361319' MSG="$message" node ./telegram/index
