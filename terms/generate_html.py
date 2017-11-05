@@ -196,7 +196,10 @@ def get_neerc_info(term: str):
         }
         return data
 
-    text, html = get_text()
+    text = get_text()
+    if text is None:
+        return None
+    text, html = text
     data = {
         'title': title,
         'wiki_url': base_url,
