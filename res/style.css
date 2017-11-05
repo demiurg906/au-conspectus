@@ -21,6 +21,12 @@ body {
   font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
 }
 
+@media screen and (min-width: 480px) {
+  body {
+    font-size: 1em;
+  }
+}
+
 article {
   padding-bottom: 1em;
 }
