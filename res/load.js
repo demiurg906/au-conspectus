@@ -1,13 +1,3 @@
-var renderMath = () => renderMathInElement(document.body, {
-  throwOnError: false,
-  delimiters: [
-    {left: "$$", right: "$$", display: true},
-    {left: "\\[", right: "\\]", display: true},
-    {left: "$", right: "$", display: false},
-    {left: "\\(", right: "\\)", display: false}
-  ]
-})
-
 function encodeB64(str) {
   // first we use encodeURIComponent to get percent-encoded UTF-8,
   // then we convert the percent encodings into raw bytes which
@@ -37,7 +27,6 @@ var getQueryParam = name => {
 
 
 window.onload = e => {
-  renderMath()
   hljs.initHighlighting()
 
   var paragraph = getQueryParam('p')
