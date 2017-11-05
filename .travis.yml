@@ -1,20 +1,27 @@
 sudo: enabled
 dist: trusty
 
-language: node_js
+language: python
+python:
+  - "3.6"
 
-node_js:
-  - "stable"
+install:
+  - pip install regex lxml requests textile cssselect jinja2
+
+# language: node_js
+
+# node_js:
+#   - "stable"
 
 cache:
   yarn: true
-  pip3: true
+  pip: true
   custom_install: true
   directories:
     - node_modules
     # - /usr/lib/python3/dist-packages
     # - /usr/local/lib/python3.4/dist-packages
-    - $HOME/.cache/pip3
+    # - $HOME/.cache/pip3
 
 notifications:
   email:
@@ -28,15 +35,15 @@ addons:
   apt:
     packages:
       - "sshpass"
-      - "python3"
-      - "python3-pip"
+      # - "python3"
+      # - "python3-pip"
 
 before_install:
   - sudo add-apt-repository ppa:bauruine/sshpass -y
   - sudo apt-get update -q
 
-install:
-  - sudo pip3 install regex lxml requests textile cssselect jinja2
+# install:
+#   - sudo pip3 install regex lxml requests textile cssselect jinja2
 
 before_script:
   - (cd ast && yarn)

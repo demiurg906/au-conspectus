@@ -1,7 +1,8 @@
 #!/bin/bash
 
 echo "VERSIONS *********************"
-pip3 show textile
+node --version
+python --version
 echo "VERSIONS *********************"
 
 # skip if build is triggered by pull request
@@ -32,7 +33,7 @@ mkdir ./input
 
 find ./source -name '*.md' -print0 | xargs -n1 --null -t -I {} -- node ./ast/index.js {}
 
-python3 ./terms/generate_html.py ./source ./_site
+python ./terms/generate_html.py ./source ./_site
 cp ./source/*.jpg ./source/*.png ./source/*.svg ./_site 2>/dev/null || :
 mkdir -p ./_site/assets
 cp ./res/*.css ./res/*.js ./_site/assets 2>/dev/null || :
@@ -61,6 +62,6 @@ git push --force origin gh-pages
 cd ..
 
 git show --name-status --oneline | tail -n +2
-message=$(git show --name-status --oneline | tail -n +2 | python3 ./telegram/message_generator.py)
+message=$(git show --name-status --oneline | tail -n +2 | python ./telegram/message_generator.py)
 echo "$message"
 TM_TOKEN="$TM_TOKEN" CHAT='-239361319' MSG="$message" node ./telegram/index
