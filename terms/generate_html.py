@@ -304,7 +304,17 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
         terms_file = filename.replace('.html', '.terms.json')
         terms_json = generate_terms_info(terms_file)
 
-        envs.append((res_file, {'content': content_template.format(content, terms_json)}))
+        md_file = 'source/{}'.format(file.replace('.html', '.md'))
+        meta_title = 'Конспект по алгоритмам'
+        with open(md_file) as f:
+            for line in f:
+                if line.startswith('#'):
+                    meta_title += '. ' + line.replace('#', '').strip()
+
+        envs.append((res_file, {
+            'content': content_template.format(content, terms_json),
+            'meta_title': meta_title
+        }))
 
     toc = generate_toc(toc_list)
     with open('./terms/n_template.html') as f:
@@ -330,7 +340,7 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
             print('{} generated'.format(res_file))
     with open('{}/index.html'.format(output_folder), 'w') as f:
         toc_html = ninja_template.render({'toc': toc})
-        f.write(template.render({'content': toc_html}))
+        f.write(template.render({'content': toc_html, 'meta_title': 'Конспект по алгоритмам'}))
 
 
 def main():
