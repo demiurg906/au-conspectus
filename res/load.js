@@ -49,7 +49,7 @@ window.onload = e => {
     var relative = document.body.parentNode.getBoundingClientRect()
     $button.style.top   = `${rect.bottom - relative.top}px`
     $button.style.right = `${-rect.right + relative.right}px`
-    $button.style.display = 'block'
+    $button.style.display = 'flex'
     $button.style.opacity = 1
 
     var wholeParagraph = r.anchorNode.parentNode.innerText
@@ -65,6 +65,8 @@ window.onload = e => {
     console.log(link)
 
     $button.onclick = () => window.open(link, '_blank').focus()
+    setTimeout(() => $button.style.opacity = 0, 1000)
+    setTimeout(() => $button.style.display = 'none', 2000)
   }
 
   document.onmouseup = e => offerChange()
