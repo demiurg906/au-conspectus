@@ -8,42 +8,21 @@ python:
 install:
   - pip install regex lxml requests textile cssselect jinja2
 
-# language: node_js
-
-# node_js:
-#   - "stable"
-
 cache:
   yarn: true
   pip: true
   custom_install: true
   directories:
     - node_modules
-    # - /usr/lib/python3/dist-packages
-    # - /usr/local/lib/python3.4/dist-packages
-    # - $HOME/.cache/pip3
 
-notifications:
-  email:
-    recipients:
-      # - xamgore+travis@ya.ru
-    template:
-      - "%{repository} (%{commit}) : %{message} %{foo} "
-      - "Build details: %{build_url}"
+# before_install:
+#   - sudo add-apt-repository ppa:bauruine/sshpass -y
+#   - sudo apt-get update -q
 
-addons:
-  apt:
-    packages:
-      - "sshpass"
-      # - "python3"
-      # - "python3-pip"
-
-before_install:
-  - sudo add-apt-repository ppa:bauruine/sshpass -y
-  - sudo apt-get update -q
-
-# install:
-#   - sudo pip3 install regex lxml requests textile cssselect jinja2
+# addons:
+#   apt:
+#     packages:
+#       - "sshpass"
 
 before_script:
   - (cd ast && yarn)
