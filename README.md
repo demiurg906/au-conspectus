@@ -6,7 +6,17 @@ In order to synchronize our work and simplify the verification and publication, 
 
 While preparing for exams, it is important to re-read the material. We highlight important terms in the text, so when you click on them, an illustration with brief information appears — it's easier to recall what this term means and how it is applied in the current context. If this is not enough, one can use the fuzzy search on the site.
 
-### Contributors
+## Installation
+
+### Local machine
+
+* Run `./script/init.sh` to install all required pacakges
+* Put your documents into `source` folder
+* Run `python3 ./script/build.py` to generate your docs. All pages will be collected in `site` directory
+
+### Travis
+
+## Contributors
 
 We build the AST from the markup files, make the transformations over it, extract useful information (like headers, terms, function names) and then convert to the HTML AST. At this point we also do some useful preparations (for math and syntax highlighting) and then convert everything to HTML. Extra information is stored in separate JSON files. Thanks to @AlexandraOlegovna, she did this part of the project perfectly.
 

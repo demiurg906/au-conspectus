@@ -29,4 +29,4 @@ before_script:
   - (cd telegram && yarn)
   - sudo chmod +x ./script/build.sh
 
-script: ./script/build.sh
+script: python3 ./script/build.py

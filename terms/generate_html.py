@@ -284,7 +284,7 @@ def generate_toc(toc_list):
     return toc
 
 
-def generate_htmls(input_folder='./terms/input', output_folder='./terms/output', template_name='template.html'):
+def generate_htmls(host, input_folder='./terms/input', output_folder='./terms/output', template_name='template.html'):
     files = [file for file in sorted(os.listdir(input_folder)) if file.endswith('.html')]
     content_template = '{}\n<script>\nvar terms = {};\n</script>'
     envs = []
@@ -333,7 +333,7 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
         template = Template(template)
 
     prev_next_refs = []
-    href_template = 'https://xamgore.github.io/au-conspectus/{}'
+    href_template = 'https://{}/au-conspectus/'.format(host) + '{}'
     for i in range(len(html_filenames)):
         left = None if i == 0 else href_template.format(html_filenames[i-1])
         right = None if i == len(html_filenames) - 1 else href_template.format(html_filenames[i+1])
@@ -357,8 +357,8 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
 
 def main():
     if sys.argv[1:]:
-        input_folder, output_folder = sys.argv[1:]
-        generate_htmls(input_folder, output_folder, template_name='./ast/template.html')
+        host, input_folder, output_folder = sys.argv[1:]
+        generate_htmls(host, input_folder, output_folder, template_name='./ast/template.html')
     else:
         generate_htmls(template_name='./ast/template.html')
 

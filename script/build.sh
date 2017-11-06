@@ -1,5 +1,7 @@
 #!/bin/bash
 
+------------
+
 # skip if build is triggered by pull request
 if [ "$TRAVIS_PULL_REQUEST" == "true" ]; then
   echo "this is PR, exiting"
@@ -21,29 +23,33 @@ git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh
 ( cd ./_site && rm -rf ./* )
 
 # persuade github not to use jekyll
-touch ./_site/.nojekyll
+touch ./_site/.nojekyll 2>/dev/null || :
 
 # make the template accessible from current dir
-ln -s ./ast/template.html
+ln -s ./ast/template.html 2>/dev/null || :
 
 # using the template, convert source markdown to html + json
-mkdir ./input
+mkdir ./input 2>/dev/null || :
 find ./source -name '*.md' -print0 | xargs -n1 --null -t -I {} -- node ./ast/index.js {}
 
 # generate the contents, move images & htmls the root folder
-python ./terms/generate_html.py ./source ./_site
+python ./terms/generate_html.py "${1}" ./source ./_site
 cp ./source/*.jpg ./source/*.png ./source/*.svg ./_site 2> /dev/null || :
 
 mkdir -p ./_site/assets
 cp ./res/*.css ./res/*.js ./_site/assets 2>/dev/null || :
 
 # push generated htmls back to repository
-cd _site
-git config user.email "no-reply@github.com"
-git config user.name "Travis Bot"
-git add --all
-git commit --amend -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push --force origin gh-pages
+if [ ${GH_TOKEN} ]
+then
+    cd _site
+    git config user.email "no-reply@github.com"
+    git config user.name "Travis Bot"
+    git add --all
+    git commit --amend -m "Travis #$TRAVIS_BUILD_NUMBER"
+    git push --force origin gh-pages
+    cd ..
+fi
 
 # ssh
 # echo 'Send gh-pages to mmcs server...'
@@ -56,9 +62,8 @@ git push --force origin gh-pages
 
 
 # send notification to telegram chat
-cd ..
+
 
 git show --name-status --oneline | tail -n +2
 message=$(git show --name-status --oneline | tail -n +2 | python ./telegram/message_generator.py)
-echo "$message"
-TM_TOKEN="$TM_TOKEN" CHAT='80632604' MSG="$message" node ./telegram/index
+[[ -z "$TM_TOKEN" ]] || TM_TOKEN="$TM_TOKEN" CHAT='${2}' MSG="$message" node ./telegram/index
