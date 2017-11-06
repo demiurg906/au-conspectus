@@ -216,6 +216,7 @@ pre code {
     color: #000;
     z-index: 100;
     box-sizing: content-box;
+    font-size: 0.8em;
 }
 
 .navigation {
