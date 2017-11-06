@@ -39,6 +39,7 @@ window.onload = e => {
     node.scrollIntoView()
   }
 
+  var hideTimeout, opacityTimeout;
 
   var offerChange = () => {
     r = window.getSelection();
@@ -64,15 +65,18 @@ window.onload = e => {
     var link = `${newIssue}?title=${title}&body=${encodeURIComponent(msg)}`
     console.log(link)
 
-    var timeout;
     var hide = () => {
-      setTimeout(() => $button.style.opacity = 0, 3000)
-      timeout = setTimeout(() => $button.style.display = 'none', 4000)
+      opacityTimeout = setTimeout(() => $button.style.opacity = 0, 3000)
+      hideTimeout    = setTimeout(() => $button.style.display = 'none', 4000)
     }
 
     $button.onclick = () => window.open(link, '_blank').focus()
     $button.onmouseleave = _ => hide()
-    $button.onmouseover  = _ => clearTimeout(timeout)
+    $button.onmouseover  = _ => {
+      clearTimeout(opacityTimeout);
+      clearTimeout(hideTimeout);
+    }
+    
     hide()
   }
 
