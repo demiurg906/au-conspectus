@@ -147,6 +147,7 @@ code {
 
 pre {
   font-family: monospace, monospace;
+  font-size: 0.8em;
   border: solid 1px #c8ccd1;
   white-space: pre;
   margin: 0.5em 0 0.9em;
