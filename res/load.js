@@ -64,9 +64,15 @@ window.onload = e => {
     var link = `${newIssue}?title=${title}&body=${encodeURIComponent(msg)}`
     console.log(link)
 
+    var timeout;
+    var hide = () => {
+      setTimeout(() => $button.style.opacity = 0, 1000)
+      timeout = setTimeout(() => $button.style.display = 'none', 2000)
+    }
+
     $button.onclick = () => window.open(link, '_blank').focus()
-    setTimeout(() => $button.style.opacity = 0, 1000)
-    setTimeout(() => $button.style.display = 'none', 2000)
+    $button.onmouseleave = _ => hide()
+    $button.onmouseenter = _ => clearTimeout(timeout)
   }
 
   document.onmouseup = e => offerChange()
