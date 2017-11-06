@@ -79,4 +79,4 @@ $O(\min{|s_1| + |s_2|})$ + восстановление ответа.
 **Анализ:**
 $T(n) = |s1|\cdot|s2| \frac{|s1|\cdot|s2|}2 + \frac{|s1|\cdot|s2|}4 = O(|s1|\cdot|s2|) $
 
-Такой подход называется *Meet in the middle*.
+Такой подход называется <i>Meet in the middle</i>.

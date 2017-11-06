@@ -62,7 +62,7 @@ parent(v) = v div 2
             else:
                 break  # все стало хорошо, дальше всплывать не надо
     ```
-    $O(\text{decrease{\textunderscore}key}) = O(\log n)$
+    $O(\text{decrease-key}) = O(\log n)$
 * `insert` — вставить элемент в кучу.
     ```python
     def insert(x):
