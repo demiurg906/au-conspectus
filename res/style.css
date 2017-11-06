@@ -112,11 +112,11 @@ a:hover {
   list-style: decimal;
 }
 
-.content .term {
+/*.content .term {
   text-decoration: underline;
   text-decoration-style: dotted;
   text-decoration-color: red;
-}
+}*/
 
 .content img {
   max-width: 100%;
