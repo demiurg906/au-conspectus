@@ -66,13 +66,13 @@ window.onload = e => {
 
     var timeout;
     var hide = () => {
-      setTimeout(() => $button.style.opacity = 0, 1000)
-      timeout = setTimeout(() => $button.style.display = 'none', 2000)
+      setTimeout(() => $button.style.opacity = 0, 3000)
+      timeout = setTimeout(() => $button.style.display = 'none', 4000)
     }
 
     $button.onclick = () => window.open(link, '_blank').focus()
     $button.onmouseleave = _ => hide()
-    $button.onmouseenter = _ => clearTimeout(timeout)
+    $button.onmouseover  = _ => clearTimeout(timeout)
     hide()
   }
 
