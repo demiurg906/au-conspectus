@@ -73,6 +73,7 @@ window.onload = e => {
     $button.onclick = () => window.open(link, '_blank').focus()
     $button.onmouseleave = _ => hide()
     $button.onmouseenter = _ => clearTimeout(timeout)
+    hide()
   }
 
   document.onmouseup = e => offerChange()
