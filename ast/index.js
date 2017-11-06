@@ -18,6 +18,7 @@ process.argv.length <3 && (console.log(`node ${path.basename(process.argv[1])} s
 
 var headers = []
 var terms = []
+var description = ""
 
 
 function addSpanToEmp(options = {}) {
@@ -79,11 +80,28 @@ function formulasProcessing(options = {}) {
     }
 }
 
+
+function exptractDescription(options = {}) {
+    return (node, file) => { extract(node) }
+
+    function extract(node) {
+        if (node.type == "code" || node.type == "table" ||
+            (node.type == "heading" && node.depth == 1))
+                return;
+        if (node.type == "text" || node.type == "inlineMath")
+            description += node.value + " "
+        else
+            (node.children || []).forEach(extract)
+    }
+}
+
+
 sourceFileName = process.argv[2]
 sourceFile = vfile.readSync(sourceFileName)
 
 unified()
   .use(remarkParse)
+  .use(exptractDescription)
   .use(addSpanToEmp)
   .use(math)
   .use(remarkRehype, { commonmark: true, allowDangerousHTML: true })
@@ -106,4 +124,8 @@ fs.writeFile(termsFileName, JSON.stringify(terms),
 
 headersFileName = sourceFileName.substr(0, sourceFileName.lastIndexOf(".")) + ".headers.json";
 fs.writeFile(headersFileName, JSON.stringify(headers),
+        (err) => { if (err) return console.log(err);});
+
+descFileName = sourceFileName.substr(0, sourceFileName.lastIndexOf(".")) + ".desc.txt";
+fs.writeFile(descFileName, description.substring(0, 155).replace("\n", ""),
         (err) => { if (err) return console.log(err);});
