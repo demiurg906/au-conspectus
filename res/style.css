@@ -108,7 +108,7 @@ a:hover {
   margin-left: 2em;
 }
 
-.content li > p {
+.content li > p:first-child {
   display: inline;
 }
 
