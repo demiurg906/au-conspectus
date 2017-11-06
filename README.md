@@ -1,4 +1,4 @@
-# au-conspectus <img src="https://travis-ci.org/xamgore/au-conspectus.svg?branch=master" alt="build status">
+# au-conspectus <a href="https://travis-ci.org/xamgore/au-conspectus/builds"><img src="https://travis-ci.org/xamgore/au-conspectus.svg?branch=master" alt="build status"></a>
 
 This repository is a storage of all notes written by @xamgore, @demiurg906 and @AlexandraOlegovna. We are students of the Saint Petersburg Academic University, whose courses records are kept.
 
