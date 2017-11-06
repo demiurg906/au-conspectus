@@ -108,6 +108,10 @@ a:hover {
   margin-left: 2em;
 }
 
+.content li > p {
+  display: inline;
+}
+
 .content ol {
   list-style: decimal;
 }
