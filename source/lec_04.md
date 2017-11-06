@@ -97,15 +97,15 @@ $= \sum\limits_{i=1}^{n-1}\sum\limits_{k=1}^{n-i} \frac 2 {k+1} \leq \sum\limits
 2. QuickSort3: в `partition` делим массив на три части -- меньше опорного, равные ему, большие его.
 3. QuickSortStable: `partition` будет рекурсивный и использовать циклические сдвиги. $O(n\log^2 n)$.
 4. QuickSortRec: гарантирует глубину рекурсии $\Theta(\log n)$.
-    ```python
-    def quicksort_rec(a, l, r)):
-        while r - l > 0:
-            px = pivot(a, l, r)
-            m = partition(a, l, r, px)
-            if m - l > (r - l) // 2:
-                quicksort_rec(a, m + 1, r)
-                r = m - 1
-            else:
-                quicksort_rec(a, l, m)
-                l = m + 1
-    ```
+```python
+def quicksort_rec(a, l, r)):
+    while r - l > 0:
+        px = pivot(a, l, r)
+        m = partition(a, l, r, px)
+        if m - l > (r - l) // 2:
+            quicksort_rec(a, m + 1, r)
+            r = m - 1
+        else:
+            quicksort_rec(a, l, m)
+            l = m + 1
+```

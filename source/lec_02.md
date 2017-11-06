@@ -51,12 +51,12 @@ $3^{\log_2n}=n^{\log_23}$
 
 $$T(n) = \sum\limits_{l=0}^{\log_an} a^l \cdot O\left(\left(\frac{n}{b^l} \right)^d\right) = n^d \sum\limits_{l=0}^{\log_an} \frac{a^l}{b^{l-d}}$$
 
-Получилась геометрическая прогресия с частным $\frac{a}{b^d}$
+Получилась геометрическая прогрессия с частным $\frac{a}{b^d}$
 Три варианта:
-1. $a = b^d \Rightarrow \bold{T(n) = O(n^d\cdot\log n)}$
-2. $a < b^d \Rightarrow \sum \text{геометрической прогресии} = O(1) \Rightarrow \bold{T(n) = O(n^d)}$
+1. $a = b^d \Rightarrow T(n) = O(n^d\cdot\log n)$
+2. $a < b^d \Rightarrow \sum \text{геометрической прогресии} = O(1) \Rightarrow T(n) = O(n^d)$
     Число задач растет медленнее, чем их сложность, вся сложность в корне
-3. $a > b^d \Rightarrow T(n) = O(n^d) \cdot \frac{(\frac{a}{b^d})^{\log_an} - 1}{\frac{a}{b^d}- 1} \Rightarrow \bold{T(n) = O(n^{\log_ba})} $
+3. $a > b^d \Rightarrow T(n) = O(n^d) \cdot \frac{(\frac{a}{b^d})^{\log_an} - 1}{\frac{a}{b^d}- 1} \Rightarrow T(n) = O(n^{\log_ba}) $
     Число задач растет быстрее, чем их сложность, вся сложность в листьях
 
 **Альтернативная формулировка:**
