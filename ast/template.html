@@ -2,21 +2,24 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-
 <title>{{ meta_title }}</title>
 <!-- Search Engine -->
 <meta name="description" content="{{ meta_description }}">
+<meta name="image" content="https://i.imgur.com/HunB6ar.jpg">
 <!-- Schema.org for Google -->
 <meta itemprop="name" content="{{ meta_title }}">
 <meta itemprop="description" content="{{ meta_description }}">
+<meta itemprop="image" content="https://i.imgur.com/HunB6ar.jpg">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="{{ meta_title }}">
 <meta name="twitter:description" content="{{ meta_description }}">
+<meta name="twitter:image:src" content="https://i.imgur.com/HunB6ar.jpg">
 <!-- Twitter - Article -->
 <!-- Open Graph general (Facebook, Pinterest & Google+) -->
 <meta name="og:title" content="{{ meta_title }}">
 <meta name="og:description" content="{{ meta_description }}">
+<meta name="og:image" content="https://i.imgur.com/HunB6ar.jpg">
 <meta name="og:type" content="article">
 <!-- Open Graph - Article -->
 
@@ -33,6 +36,7 @@ MathJax.Hub.Config({
   tex2jax:    {
     inlineMath:  [['$','$'],  ['\\(','\\)']],
     displayMath: [["$$","$$"],["\\[","\\]"]],
+    displayAlign: "center"
     // processEscapes: true
   },
   CommonHTML: { linebreaks: { automatic: true } },
