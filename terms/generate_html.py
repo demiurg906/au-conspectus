@@ -341,7 +341,11 @@ def generate_htmls(input_folder='./terms/input', output_folder='./terms/output',
             print('{} generated'.format(res_file))
     with open('{}/index.html'.format(output_folder), 'w') as f:
         toc_html = ninja_template.render({'toc': toc})
-        f.write(template.render({'content': toc_html, 'meta_title': 'Конспект по алгоритмам'}))
+        f.write(template.render({
+            'content': toc_html,
+            'meta_title': 'Конспект по алгоритмам',
+            'index_page': True
+        }))
 
 
 def main():
