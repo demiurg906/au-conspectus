@@ -7,30 +7,30 @@
 
 ## Умножение длинных битовых чисел
 
-Вход: два n-битовых числа, x и y
-Выход: x * y
+**Вход**: два $n$-битовых числа, $x$ и $y$
+**Выход**: $x \cdot y$
 
-Сложность сложения двух чисел -- $O(n)$
-Сложность классического умножения (в столбик) -- $O(n^2)$
+Сложность сложения двух чисел — $O(n)$
+Сложность классического умножения (в столбик) — $O(n^2)$
 
-$x = x_u \cdot 2^{n/2} + x_l$
-$y = y_u \cdot 2^{n/2} + y_l$
+$$x = x_u \cdot 2^{n/2} + x_l$$
 
-$x\cdot y = x_u\cdot y_u\cdot 2^n + (x_u\cdot y_l + x_l\cdot y_u)\cdot 2^{n/2} + x_l\cdot y_l$
+$$y = y_u \cdot 2^{n/2} + y_l$$
 
-Таким образом умножение двух n-битовых чисел разложилось на четыре перемножения $\frac n2$-битовых чисел.
-Пусть $T(n)$ -- сложность задачи размера n. Тогда $T(N) = 4T(\frac n 2) + O(n)$.
+$$x\cdot y = x_u\cdot y_u\cdot 2^n + (x_u\cdot y_l + x_l\cdot y_u)\cdot 2^{n/2} + x_l\cdot y_l$$
+
+Таким образом умножение двух $n$-битовых чисел разложилось на четыре перемножения $\frac n2$-битовых чисел.
+
+Пусть $T(n)$ — сложность задачи размера $n$. Тогда $T(N) = 4T(\frac n 2) + O(n)$.
 
 База: $T(1) = 1 = O(1)$
 Глубина дерева вызовов: $\log_2 n$
 Число операций на уровне $k$: $4^k$ задач размера $\frac{n}{2^k}$
 $T(n) = \sum\limits_{l=0}^{\log_2n} O(\frac{n}{2^l})\cdot 4^l = O(n^2)$
 
-### Метод Карацубы
+### Алгоритм Карацубы
 
-*Алгоритма Карацубы*:
-
-$x\cdot y = x_u\cdot y_u\cdot 2^n + ((x_u+x_l)(y_u+y_l) - x_u\cdot y_u - x_l\cdot y_l)\cdot 2^{\frac n 2} + x_l\cdot y_l$
+$$x\cdot y = x_u\cdot y_u\cdot 2^n + ((x_u+x_l)(y_u+y_l) - x_u\cdot y_u - x_l\cdot y_l)\cdot 2^{\frac n 2} + x_l\cdot y_l$$
 
 $T(n) = 3T(\frac n 2) + O(n)$
 
@@ -43,11 +43,15 @@ $3^{\log_2n}=n^{\log_23}$
 
 **$T(n) = a T(\frac n b) + O(n^d), a \geq 1, b > 1, d\geq0$**
 
-На уровне l: $a^l \cdot O(\left(\frac{n}{b^l} \right)^d)$
-* $a^l$ -- количество подзадач
-* $O(\left(\frac{n}{b^l} \right)^d)$ -- стоимость одной задачи
+На уровне $l$: $a^l \cdot O\left(\left(\frac{n}{b^l} \right)^d\right)$
+* $a^l$ — количество подзадач
+* $O\left(\left(\frac{n}{b^l} \right)^d\right)$ — стоимость одной задачи
 
-Всего операций: $T(n) = \sum\limits_{l=0}^{\log_an} a^l \cdot O\left(\left(\frac{n}{b^l} \right)^d\right) = n^d \sum\limits_{l=0}^{\log_an} \frac{a^l}{b^{l-d}}$ -- геометрическая прогресия с частным $\frac{a}{b^d}$
+Всего операций:
+
+$$T(n) = \sum\limits_{l=0}^{\log_an} a^l \cdot O\left(\left(\frac{n}{b^l} \right)^d\right) = n^d \sum\limits_{l=0}^{\log_an} \frac{a^l}{b^{l-d}}$$
+
+Получилась геометрическая прогресия с частным $\frac{a}{b^d}$
 Три варианта:
 1. $a = b^d \Rightarrow \bold{T(n) = O(n^d\cdot\log n)}$
 2. $a < b^d \Rightarrow \sum \text{геометрической прогресии} = O(1) \Rightarrow \bold{T(n) = O(n^d)}$
@@ -62,9 +66,9 @@ $3^{\log_2n}=n^{\log_23}$
 
 ### Примеры
 
-1. **Двоичный поиск**: $T(n) = T(\frac n 2) + O(1) \Rightarrow a=1, b=2, d=0 \Rightarrow T(n) = O(\log n)$
-2. **Сортировка слиянием**: $T(n) = 2\cdot T(\frac n 2) + O(n) \Rightarrow a = 2, b = 2, d = 1 \Rightarrow T(n) = O(n \log n)$
-3. **Алгоритм Карацубы**: $T(n) = 3\cdot T(\frac n 2) + O(n) \Rightarrow a = 3, b=2, d=1 \Rightarrow T(n) = O(n^{\log_23}) \approx O(n^{1.58})$
+1. Двоичный поиск: $T(n) = T(\frac n 2) + O(1) \Rightarrow a=1, b=2, d=0 \Rightarrow T(n) = O(\log n)$
+2. Сортировка слиянием: $T(n) = 2\cdot T(\frac n 2) + O(n) \Rightarrow a = 2, b = 2, d = 1 \Rightarrow T(n) = O(n \log n)$
+3. Алгоритм Карацубы: $T(n) = 3\cdot T(\frac n 2) + O(n) \Rightarrow a = 3, b=2, d=1 \Rightarrow T(n) = O(n^{\log_23}) \approx O(n^{1.58})$
 
 
 ## MergeSort без рекурсии
@@ -88,9 +92,12 @@ def merge_sort(a):
 Всего $n!$ перестановок. Для каждой перестановки существует уникальный лист.
 
 **Какова минимальная высота дерева?**
-У дерева высоты $h$ $2^h$ листьев.
-$n!\leq 2^h \Rightarrow h >= \log_2 n! \leq n \cdot \log_2 n$ -- оценка сверху
-$n! = \sqrt(2\pi n)\left(\frac n e\right) ^ n$ -- формула Стирлинга
+У дерева высоты $h$ есть $2^h$ листьев.
+
+$n!\leq 2^h \Rightarrow h \geqslant \log_2 n! \leq n \cdot \log_2 n$ — оценка сверху
+
+$n! = \sqrt(2\pi n)\left(\frac n e\right) ^ n$ — формула Стирлинга
+
 $\log n! \geq \log 1 + \log 2 + ... + \log \frac n 2 + ... + \log n \geq \frac n 2 \log \frac n 2 = \Omega(n \log n)$
 
-**Таким образом** $h = \Omega(n log n)$, и худшее время, которое сортировка, которая сортиует, основываясь только на сравнениях, составляет $\Omega(n \log n)$
+**Таким образом** $h = \Omega(n \log n)$, и худшее время, которое сортировка, которая сортиует, основываясь только на сравнениях, составляет $\Omega(n \log n)$
