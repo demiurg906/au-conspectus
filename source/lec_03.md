@@ -34,14 +34,14 @@ parent(v) = v div 2
         for i in range(n // 2, 0, -1):
             heapify(i1)
     ```
-    $O(\text{make{\textunderscore}heap}) = O(n \log n)$ — наивная оценка.
+    $O(\text{make-heap}) = O(n \log n)$ — наивная оценка.
     $$T(n) = \sum\limits_{h=1}^{log_2 n} \frac{n}{2^h} O(h) = n\cdot O(1) \left(\sum\limits_{h=1}^{log_2 n} \frac{h}{2^h} \right)$$
 
     $$\sum\limits_{k=0}^{\infty} a^k = \frac 1 {1 - a}$$
 
     $$\left(\sum\limits_{k=0}^{\infty} a^k = \frac 1 {1 - a}\right)' = \sum\limits_{k=0}^{\infty} \frac{k}{a^{k -1}} = O(1)$$
 
-    Таким образом $O(\text{make{\textunderscore}heap}) = \Theta(n)$
+    Таким образом $O(\text{make-heap}) = \Theta(n)$
 * `extract_min` — удалить минимальный элемент.
     Меняем местами первый (мниальный) и последний элемент, после чего восстановить порядок.
     ```python
@@ -51,7 +51,7 @@ parent(v) = v div 2
         size -= 1
         heapify(1)
     ```
-    $O(\text{extract{\textunderscore}min}) = O(\log n)$
+    $O(\text{extract-min}) = O(\log n)$
 * `decrease_key` — всплытие элемента
     ```python
     def decrease_key(i):
