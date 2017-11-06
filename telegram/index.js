@@ -15,3 +15,4 @@ msg && bot.sendMessage(process.env.CHAT, msg, {
 
 // AU17: -1001143231884
 // DD17:   -239361319
+// demiurg906: 80632604
