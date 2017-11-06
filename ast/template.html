@@ -33,25 +33,17 @@ MathJax.Hub.Config({
 
   <article class="content">
       <div class="navigation">
-        {% if left_page %}
-          <a href="{{ left_page }}">← взад</a>
-        {% endif %}
+        <a href="{{ left_page }}">{% if left_page %}← взад{% endif %}</a>
         <a href="index.html">на главную</a>
-        {% if right_page %}
-          <a href="{{ right_page }}">вперёд →</a>
-        {% endif %}
+        <a href="{{ right_page }}">{% if right_page %}вперёд →{% endif %}</a>
       </div>
 
       {{ content }}
 
       <div class="navigation">
-        {% if left_page %}
-          <a href="{{ left_page }}">← взад</a>
-        {% endif %}
+        <a href="{{ left_page }}">{% if left_page %}← взад{% endif %}</a>
         <a href="index.html">на главную</a>
-        {% if right_page %}
-          <a href="{{ right_page }}">вперёд →</a>
-        {% endif %}
+        <a href="{{ right_page }}">{% if right_page %}вперёд →{% endif %}</a>
       </div>
   </article>
 <script src="assets/popup.js"></script>
