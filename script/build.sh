@@ -1,7 +1,5 @@
 #!/bin/bash
 
-------------
-
 # skip if build is triggered by pull request
 if [ "$TRAVIS_PULL_REQUEST" == "true" ]; then
   echo "this is PR, exiting"
