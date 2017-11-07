@@ -13,8 +13,10 @@ set -e
 rm -rf _site
 mkdir _site
 
+echo "${1}"
+
 # clone remote repo to "_site"
-git clone "https://${GH_TOKEN}@github.com/xamgore/au-conspectus.git" --branch gh-pages --depth=1 ./_site
+git clone "https://${GH_TOKEN}@github.com/${1}.git" --branch gh-pages --depth=1 ./_site
 
 # clean repo from all files
 ( cd ./_site && git rm -rf --ignore-unmatch ./* )
@@ -31,7 +33,7 @@ mkdir ./input 2>/dev/null || :
 find ./source -name '*.md' -print0 | xargs -n1 --null -t -I {} -- node ./ast/index.js {}
 
 # generate the contents, move images & htmls the root folder
-python ./terms/generate_html.py "${1}" ./source ./_site
+python ./terms/generate_html.py "${1}" "${2}" ./source ./_site
 cp ./source/*.jpg ./source/*.png ./source/*.svg ./_site 2> /dev/null || :
 
 mkdir -p ./_site/assets
@@ -63,5 +65,5 @@ fi
 
 
 git show --name-status --oneline | tail -n +2
-message=$(git show --name-status --oneline | tail -n +2 | python ./telegram/message_generator.py)
-[[ -z "$TM_TOKEN" ]] || TM_TOKEN="$TM_TOKEN" CHAT='${2}' MSG="$message" node ./telegram/index
+message=$(git show --name-status --oneline | tail -n +2 | python ./telegram/message_generator.py "${2}")
+[[ -z "$TM_TOKEN" ]] || TM_TOKEN="$TM_TOKEN" CHAT='${3}' MSG="$message" node ./telegram/index

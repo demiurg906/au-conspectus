@@ -284,12 +284,13 @@ def generate_toc(toc_list):
     return toc
 
 
-def generate_htmls(host, input_folder='./terms/input', output_folder='./terms/output', template_name='template.html'):
+def generate_htmls(github_host, pages_host, input_folder='./terms/input', output_folder='./terms/output', template_name='template.html'):
     files = [file for file in sorted(os.listdir(input_folder)) if file.endswith('.html')]
     content_template = '{}\n<script>\nvar terms = {};\n</script>'
     envs = []
     toc_list = []
     html_filenames = []
+    new_issue = 'https://github.com/{}/issues/new'.format(github_host)
     for file in files:
         filename = '{}/{}'.format(input_folder, file)
         with open(filename) as f:
@@ -320,7 +321,8 @@ def generate_htmls(host, input_folder='./terms/input', output_folder='./terms/ou
         envs.append((res_file, {
             'content': content_template.format(content, terms_json),
             'meta_title': meta_title,
-            'meta_description': description
+            'meta_description': description,
+            'new_issue': new_issue
         }))
 
     toc = generate_toc(toc_list)
@@ -333,7 +335,7 @@ def generate_htmls(host, input_folder='./terms/input', output_folder='./terms/ou
         template = Template(template)
 
     prev_next_refs = []
-    href_template = 'https://{}/au-conspectus/'.format(host) + '{}'
+    href_template = 'https://{}/'.format(pages_host) + '{}'
     for i in range(len(html_filenames)):
         left = None if i == 0 else href_template.format(html_filenames[i-1])
         right = None if i == len(html_filenames) - 1 else href_template.format(html_filenames[i+1])
@@ -351,16 +353,14 @@ def generate_htmls(host, input_folder='./terms/input', output_folder='./terms/ou
             'content': toc_html,
             'meta_title': 'Конспект по алгоритмам',
             'meta_description': 'Конспект всех лекций А. Смаля',
-            'index_page': True
+            'index_page': True,
+            'new_issue': new_issue
         }))
 
 
 def main():
-    if sys.argv[1:]:
-        host, input_folder, output_folder = sys.argv[1:]
-        generate_htmls(host, input_folder, output_folder, template_name='./ast/template.html')
-    else:
-        generate_htmls(template_name='./ast/template.html')
+    github_host, pages_host, input_folder, output_folder = sys.argv[1:]
+    generate_htmls(github_host, pages_host, input_folder, output_folder, template_name='./ast/template.html')
 
 
 if __name__ == '__main__':
