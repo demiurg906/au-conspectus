@@ -59,7 +59,6 @@ window.onload = e => {
     var xpath = getElementXpath(r.anchorNode.parentNode)
     var backlink = `${url}?p=${encodeURIComponent(encodeB64(xpath))}`
 
-    var newIssue = 'https://github.com/xamgore/au-conspectus/issues/new'
     var msg = `Ребят, кажется у вас [ошибка](${backlink}) во фразе \`${r.toString()}\`, в параграфе:\n${cite}\n\n`
     var title = encodeURIComponent(`Ошибка в конспекте`)
     var link = `${newIssue}?title=${title}&body=${encodeURIComponent(msg)}`
@@ -76,7 +75,7 @@ window.onload = e => {
       clearTimeout(opacityTimeout);
       clearTimeout(hideTimeout);
     }
-    
+
     hide()
   }
 
