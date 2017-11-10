@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     host = sys.argv[1]
     if len(lectures) == 1:
-        _, url = parse(lectures[0])
+        _, url = parse(lectures[0], host)
         print(':boom: Новая лекция! [глянуть]({})'.format(url))
     if len(lectures) > 1:
         print(':boom: Пачка новых лекций!')
