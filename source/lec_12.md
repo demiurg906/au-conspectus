@@ -90,6 +90,7 @@ def make_set(v):
     parent[v] = v
     rank[v] = 0
 
+# O(log n)
 def find(v):
     while v !=  parent[v]:
         v = parent[v]
