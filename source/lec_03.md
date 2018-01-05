@@ -11,16 +11,33 @@ right(v)  = 2v + 1
 parent(v) = v div 2
 Индексация с единицы, v = 1..n
 ```
-Высота двоичной кучи = $\log_2(n) \pm 1$ (????????)
+Высота двоичной кучи = $\lceil\log_2(n + 1)\rceil$
 
 ### Операции над кучей
 
-* `heapify(v)`: в детях свойство кучи выполняется, в самой вершине, возможно, нет. Надо исправить.
+* `left(v)`: левый ребенок
+    ```python
+    # индексация с нуля
+    def left(v):
+        return v * 2 + 1
+    ```
+* `right(v)`: правый ребенок
+    ```python
+    def right(v):
+        return v * 2 + 2
+    ```
+* `parent(v)`: родитель элемента
+    ```python
+    def parent(v):
+        return (parent - 1) // 2
+    ```
+* `heapify(v)`: в детях свойство кучи выполняется, в самой вершине, возможно, нет. Надо исправить (спускаем тяжелый элемент вниз).
     ```python
     def heapify(v):
-        if (left(v)) <= size and key(left(v)) <= key(v):
+        m = v
+        if left(v) < size and key(left(v)) < key(v):
             m = left(v)
-        if right(v) <= size and key(left(m)) <= key(m):
+        if right(v) < size and key(left(m)) < key(m):
             m = right(v)
         if m != v:
             heap[m], heap[v] = heap[v], heap[m]
@@ -32,7 +49,7 @@ parent(v) = v div 2
     def make_heap():
         # i = n // 2 — первый элемент на предпоследнем уровне дерева
         for i in range(n // 2, 0, -1):
-            heapify(i1)
+            heapify(i)
     ```
     $O(\text{make-heap}) = O(n \log n)$ — наивная оценка.
     $$T(n) = \sum\limits_{h=1}^{log_2 n} \frac{n}{2^h} O(h) = n\cdot O(1) \left(\sum\limits_{h=1}^{log_2 n} \frac{h}{2^h} \right)$$
@@ -43,19 +60,19 @@ parent(v) = v div 2
 
     Таким образом $O(\text{make-heap}) = \Theta(n)$
 * `extract_min` — удалить минимальный элемент.
-    Меняем местами первый (мниальный) и последний элемент, после чего восстановить порядок.
+    Меняем местами первый (минимальный) и последний элемент, после чего восстанавливаем порядок.
     ```python
     def extract_min():
-        min_value = heap[1]
-        heap[1] = heap[size]
+        min_value = heap[0]
+        heap[0] = heap[size]
         size -= 1
-        heapify(1)
+        heapify(0)
     ```
     $O(\text{extract-min}) = O(\log n)$
 * `decrease_key` — всплытие элемента
     ```python
     def decrease_key(i):
-        while parent(i) > 0:
+        while parent(i) >= 0:
             if key(parent(i)) > key(i):
                 heap[i], heap[parent(i)] = heap[parent(i)], heap[i]
                 i = parent(i)
@@ -112,7 +129,7 @@ def counting_sort(a, m):
     for i in range(2, len(b)):
         c[i] = c[i - 1] + b[i - 1]
     # восстановление ответа
-    res = [o for i in range(n)]
+    res = [0 for i in range(n)]
     for i in range(n):
         res[c[a[i]]] = a[i]
         c[a[i]] += 1

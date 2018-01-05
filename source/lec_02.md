@@ -32,7 +32,7 @@ $T(n) = \sum\limits_{l=0}^{\log_2n} O(\frac{n}{2^l})\cdot 4^l = O(n^2)$
 
 $$x\cdot y = x_u\cdot y_u\cdot 2^n + ((x_u+x_l)(y_u+y_l) - x_u\cdot y_u - x_l\cdot y_l)\cdot 2^{\frac n 2} + x_l\cdot y_l$$
 
-$T(n) = 3T(\frac n 2) + O(n)$
+$T(n) = 3T\left(\frac n 2\right) + O(n)$
 
 $T(n) = \sum\limits_{l=0}^{\log_2n} O(\frac{n}{2^l})\cdot 3^l = O(n^{\log_23})$
 $3^{\log_2n}=n^{\log_23}$
@@ -41,7 +41,7 @@ $3^{\log_2n}=n^{\log_23}$
 
 ## Основная теорема о рекуррентных соотношениях
 
-**$T(n) = a T(\frac n b) + O(n^d), a \geq 1, b > 1, d\geq0$**
+**$T(n) = a T\left(\frac n b\right) + O\left(n^d\right), a \geq 1, b > 1, d\geq0$**
 
 На уровне $l$: $a^l \cdot O\left(\left(\frac{n}{b^l} \right)^d\right)$
 * $a^l$ — количество подзадач
@@ -54,9 +54,9 @@ $$T(n) = \sum\limits_{l=0}^{\log_an} a^l \cdot O\left(\left(\frac{n}{b^l} \right
 Получилась геометрическая прогрессия с частным $\frac{a}{b^d}$
 Три варианта:
 1. $a = b^d \Rightarrow T(n) = O(n^d\cdot\log n)$
-2. $a < b^d \Rightarrow \sum \text{геометрической прогресии} = O(1) \Rightarrow T(n) = O(n^d)$
+2. $a < b^d \Rightarrow \sum \text{геом. прогресии} = O(1) \Rightarrow T(n) = O(n^d)$
     Число задач растет медленнее, чем их сложность, вся сложность в корне
-3. $a > b^d \Rightarrow T(n) = O(n^d) \cdot \frac{(\frac{a}{b^d})^{\log_an} - 1}{\frac{a}{b^d}- 1} \Rightarrow T(n) = O(n^{\log_ba}) $
+3. $a > b^d \Rightarrow T(n) = O(n^d) \cdot \frac{\left(\frac{a}{b^d}\right)^{\log_an} - 1}{\frac{a}{b^d}- 1} \Rightarrow T(n) = O(n^{\log_ba}) $
     Число задач растет быстрее, чем их сложность, вся сложность в листьях
 
 **Альтернативная формулировка:**
@@ -96,7 +96,7 @@ def merge_sort(a):
 
 $n!\leq 2^h \Rightarrow h \geqslant \log_2 n! \leq n \cdot \log_2 n$ — оценка сверху
 
-$n! = \sqrt(2\pi n)\left(\frac n e\right) ^ n$ — формула Стирлинга
+$n! = \sqrt{2\pi n}\left(\frac n e\right) ^ n$ — формула Стирлинга
 
 $\log n! \geq \log 1 + \log 2 + ... + \log \frac n 2 + ... + \log n \geq \frac n 2 \log \frac n 2 = \Omega(n \log n)$
 
