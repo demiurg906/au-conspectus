@@ -28,7 +28,7 @@ $F_n = F_{n-1}+F_{n-2} \geqslant 2^{(n-1)/2} + 2^{(n-2)/2} > 2^{n/2}$
 
 $a^n = a^{n-1}+a^{n-2}$
 $a^2-a-1=0$
-$a=\frac{1+\sqrt{2}}{2} = \varphi = 1\sigma$
+$a=\frac{1+\sqrt{5}}{2} = \varphi = 1\sigma$
 
 ```python
 def fib1(n):

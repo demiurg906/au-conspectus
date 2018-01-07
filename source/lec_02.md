@@ -19,6 +19,8 @@
 
 ### Метод потенциалов
 
+<iПодробнее написано [здесь](https://neerc.ifmo.ru/wiki/index.php?title=%D0%90%D0%BC%D0%BE%D1%80%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B0%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7)</i>
+
 $1..n$ -- номера операций.
 
 $c_i$ -- стоимость $i$-ой операции
@@ -54,7 +56,7 @@ $$\sum\limits_i c_i = \sum\limits_i \widehat{c_i} + \varphi_0 - \varphi_n = \sum
     - $\widehat{c_i}$ -- добавить элемент без реаллокации
         $\widehat{c_i} = c_i + (2s_i - l) - (2s_{i-1} - l) = 1 + 2(s_i - s_{i-1}) = 3$
     - $\widehat{c_i}$ -- добавить элемент с реаллокацией в 2 раза
-        $\widehat{c_i} = c_i + (2s_i - 2l) - (2s_{i-1} - l) = s_i + 2 - l = s_i + 2 - s_{i-1} = 3$.
+        $\widehat{c_i} = c_i + (2s_i - 2l) - (2s_{i-1} - l) = s_i + 2 - l = s_i + 2 - s_{i-1} = 3$
         Таким образом, для любого $i$ $\widehat{c_i} = 3 = O(1)$.
 
 ## Другие структуры
