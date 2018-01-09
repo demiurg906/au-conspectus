@@ -99,6 +99,18 @@ a:hover {
   margin: auto;
 }
 
+.content table {
+  border-collapse: collapse;
+}
+
+.content td {
+  border-collapse: collapse;
+  padding: 0.45rem;
+  border: 1px solid #dee2e6;
+  min-width: 2.4em;
+  display: table-cell; 
+}
+
 .content ul {
   list-style: square inside;
 }
