@@ -38,3 +38,5 @@ def find(v):
 
 **Итого:** $m$ операций `find`.
 Число переходов по ребрам: $m$ переходов по верхним ребрам, $m\cdot\log^* n$ переходов по внешним ребрам, $n\cdot\log^* n$ переходов по внутренним ребрам $=O(m\log^* n)$.
+
+Страница на [neerc.ifmo](http://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D0%9D%D0%9C_(%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F_%D1%81_%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E_%D0%BB%D0%B5%D1%81%D0%B0_%D0%BA%D0%BE%D1%80%D0%BD%D0%B5%D0%B2%D1%8B%D1%85_%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D1%8C%D0%B5%D0%B2)).
