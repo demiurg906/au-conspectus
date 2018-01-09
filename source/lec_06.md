@@ -24,7 +24,7 @@ def randomized_selection(a, r, l, k):
     m_l, m_r = partition3(a, l, r, px)  # берем partition, который учитывает одинаковые элементы
     if m_l - l > k:
         return randomized_selection(a, l, m_l, k)
-    elif m_r - i > k:
+    elif m_r - l > k:
         return a[m_l]
     else:
         return randomized_selection(a, m_r, r, k - m_r)

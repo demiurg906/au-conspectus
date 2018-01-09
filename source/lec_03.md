@@ -49,7 +49,7 @@ $3^{\log_2n}=n^{\log_23}$
 
 Всего операций:
 
-$$T(n) = \sum\limits_{l=0}^{\log_an} a^l \cdot O\left(\left(\frac{n}{b^l} \right)^d\right) = n^d \sum\limits_{l=0}^{\log_an} \frac{a^l}{b^{l\cdot d}}$$
+$$T(n) = \sum\limits_{l=0}^{\log_an} a^l \cdot O\left(\left(\frac{n}{b^l} \right)^d\right) = n^d \sum\limits_{l=0}^{\log_an} \frac{a^l}{b^{d\cdot l}}$$
 
 Получилась геометрическая прогрессия с частным $\frac{a}{b^d}$
 Три варианта:

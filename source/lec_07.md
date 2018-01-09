@@ -118,7 +118,7 @@ for k = 1 to W:
 ```python
 for s = 1 to n      # s — длина отрезка
   for i = 1 to n - s:
-    C[i, i+s] = min (C[i, k] + C[k+1, i+s]) по i ≤ k ≤ i+s-1
+    C[i, i+s] = min (C[i, k] + C[k+1, i+s])  # по i ≤ k ≤ i+s-1
               + m_{i-1} * m_k * m_{i+s}
 ```
 
